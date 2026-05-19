@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jobs · The Compassion AI Ecosystem</title>
+<meta name="description" content="Open roles at organisations working on AI for animal welfare and digital minds. A collaboration between Sentient Futures and CaML." />
+<meta property="og:title" content="Jobs · The Compassion AI Ecosystem" />
+<meta property="og:description" content="Open roles at organisations working on AI for animal welfare and digital minds." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="logos/caml.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: 25 45% 18%;
+    --parchment: 39 35% 78%;
+    --accent: 171 76% 40%;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: hsl(28 18% 8%);
+    color: hsl(32 45% 91%);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  a { color: hsl(var(--accent)); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Mockup banner ────────────────────────────────────── */
+  .mockup-banner {
+    background: hsl(0 55% 18%);
+    border-bottom: 1px solid hsl(0 55% 28%);
+    color: hsl(0 50% 85%);
+    text-align: center;
+    padding: 8px 24px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .mockup-banner strong { color: hsl(0 50% 92%); }
+
+  /* ── Top nav ──────────────────────────────────────────── */
+  nav.top {
+    border-bottom: 1px solid hsl(30 15% 18%);
+    background: hsl(28 18% 8% / 0.95);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  nav.top .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+  nav.top .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: hsl(32 45% 91%);
+    text-decoration: none;
+  }
+  nav.top .links { display: flex; gap: 6px; }
+  nav.top a.nav-link {
+    color: hsl(32 35% 70%);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+  }
+  nav.top a.nav-link:hover { color: hsl(32 45% 91%); background: hsl(30 12% 14%); }
+  nav.top a.nav-link.active { color: hsl(32 45% 91%); background: hsl(30 12% 14%); }
+
+  /* ── Page header ──────────────────────────────────────── */
+  header.page {
+    text-align: center;
+    padding: 48px 24px 32px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .co-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: hsl(30 12% 12%);
+    border: 1px solid hsl(30 15% 22%);
+    border-radius: 999px;
+    padding: 8px 18px;
+    margin-bottom: 24px;
+    font-size: 12px;
+    color: hsl(32 35% 68%);
+  }
+  .co-brand .label { text-transform: uppercase; letter-spacing: 0.12em; }
+  .co-brand .logos { display: inline-flex; align-items: center; gap: 8px; }
+  .co-brand .logos img {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    background: hsl(var(--parchment) / 0.05);
+  }
+  .co-brand .ampersand { color: hsl(32 25% 55%); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+  .co-brand .org-name {
+    color: hsl(32 45% 91%);
+    font-weight: 600;
+    font-size: 13px;
+  }
+  h1.page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .page-subtitle {
+    color: hsl(32 35% 75%);
+    font-size: clamp(15px, 2vw, 18px);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── Filter bar ───────────────────────────────────────── */
+  .filter-bar {
+    max-width: 1100px;
+    margin: 0 auto 24px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .filter-bar .search {
+    flex: 1 1 240px;
+    min-width: 200px;
+    background: hsl(30 12% 11%);
+    border: 1px solid hsl(30 15% 22%);
+    color: hsl(32 45% 91%);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .filter-bar .search:focus { outline: none; border-color: hsl(var(--accent)); }
+  .filter-bar .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .filter-bar .chip {
+    background: hsl(30 12% 11%);
+    border: 1px solid hsl(30 15% 22%);
+    color: hsl(32 35% 75%);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .filter-bar .chip:hover { color: hsl(32 45% 91%); }
+  .filter-bar .chip.active {
+    background: hsl(var(--accent) / 0.18);
+    border-color: hsl(var(--accent) / 0.6);
+    color: hsl(32 45% 91%);
+  }
+  .filter-bar .count {
+    color: hsl(32 25% 55%);
+    font-size: 13px;
+    margin-left: auto;
+  }
+
+  /* ── Job cards ────────────────────────────────────────── */
+  section.jobs {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+  }
+  .job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .job-card {
+    background: hsl(30 12% 11%);
+    border: 1px solid hsl(30 15% 22%);
+    border-radius: 10px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.15s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .job-card:hover {
+    border-color: hsl(var(--accent) / 0.5);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .job-card .head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .job-card .logo {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: hsl(30 10% 16%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .job-card .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .job-card .logo .initials { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: hsl(32 45% 91%); }
+  .job-card .head-text { flex: 1; min-width: 0; }
+  .job-card .org-name {
+    font-size: 12px;
+    color: hsl(32 35% 65%);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 2px;
+  }
+  .job-card .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+  }
+  .job-card .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .job-card .meta-tag {
+    background: hsl(30 10% 16%);
+    border: 1px solid hsl(30 15% 22%);
+    padding: 3px 9px;
+    border-radius: 4px;
+    color: hsl(32 35% 75%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+  .job-card .meta-tag.region {
+    color: hsl(var(--accent));
+    border-color: hsl(var(--accent) / 0.4);
+  }
+  .job-card .desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: hsl(32 35% 80%);
+    margin: 0;
+  }
+  .job-card .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    font-size: 12px;
+    color: hsl(32 25% 55%);
+  }
+  .job-card .apply {
+    font-size: 13px;
+    font-weight: 600;
+    color: hsl(var(--accent));
+  }
+
+  .empty {
+    text-align: center;
+    padding: 60px 24px;
+    color: hsl(32 25% 55%);
+    font-size: 15px;
+  }
+
+  /* ── Submit / footer ──────────────────────────────────── */
+  section.submit {
+    max-width: 760px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+  }
+  section.submit h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 700;
+    margin: 0 0 16px;
+  }
+  section.submit p { color: hsl(32 35% 80%); font-size: 16px; }
+  .submit-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--accent));
+    color: hsl(28 18% 8%);
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .submit-cta:hover { text-decoration: none; opacity: 0.92; }
+  footer.page {
+    border-top: 1px solid hsl(30 15% 22%);
+    padding: 32px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: hsl(32 25% 60%);
+  }
+  footer.page .links { display: inline-flex; gap: 16px; margin-bottom: 8px; }
+  footer.page .credit { margin-top: 6px; color: hsl(32 20% 50%); font-size: 12px; }
+
+  @media (max-width: 600px) {
+    .co-brand { font-size: 11px; padding: 6px 12px; gap: 8px; }
+    .co-brand .logos img { height: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mockup-banner">
+  <strong>Mockup</strong> · job listings on this page are illustrative placeholders, not real openings
+</div>
+
+<nav class="top">
+  <div class="inner">
+    <a class="brand" href="./">Compassion AI Ecosystem</a>
+    <div class="links">
+      <a class="nav-link" href="./">Map</a>
+      <a class="nav-link active" href="./jobs.html">Jobs</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="co-brand">
+    <span class="label">A collaboration between</span>
+    <span class="logos">
+      <img src="logos/sentient-futures.webp" alt="Sentient Futures" />
+      <span class="org-name">Sentient Futures</span>
+    </span>
+    <span class="ampersand">×</span>
+    <span class="logos">
+      <img src="logos/caml.png" alt="CaML" />
+      <span class="org-name">CaML</span>
+    </span>
+  </div>
+  <h1 class="page-title">Jobs in the Compassion AI Ecosystem</h1>
+  <p class="page-subtitle">Open roles at organisations working on AI for animal welfare and digital minds. Filter by region or search the full list.</p>
+</header>
+
+<div class="filter-bar">
+  <input class="search" id="search" type="search" placeholder="Search jobs, orgs, locations…" />
+  <div class="chips" id="regionChips">
+    <button class="chip active" data-region="all">All regions</button>
+    <button class="chip" data-region="Conceptual Cliffs">Conceptual Cliffs</button>
+    <button class="chip" data-region="Empirical Estuary">Empirical Estuary</button>
+    <button class="chip" data-region="Funding Forest">Funding Forest</button>
+    <button class="chip" data-region="Field-building Fjords">Field-building Fjords</button>
+    <button class="chip" data-region="Training Tidelands">Training Tidelands</button>
+  </div>
+  <span class="count" id="count"></span>
+</div>
+
+<section class="jobs">
+  <div class="job-grid" id="jobGrid"></div>
+  <div class="empty" id="empty" style="display:none">No jobs match those filters yet — try clearing them.</div>
+</section>
+
+<section class="submit">
+  <h2>Hiring? Send us your role</h2>
+  <p>If your org is on the ecosystem map and you have an open position relevant to AI welfare, AI × animals, or digital minds — share it and we'll add it here.</p>
+  <a class="submit-cta" href="mailto:compassioninmachinelearning@gmail.com?subject=Compassion%20AI%20Ecosystem%20%E2%80%94%20job%20posting&body=Org%3A%20%0ARole%20title%3A%20%0ALocation%3A%20%0AType%20(full-time%2Fpart-time%2Fcontract%2Fetc)%3A%20%0AApply%20link%3A%20%0AOne-line%20description%3A%20">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Email a job posting
+  </a>
+</section>
+
+<footer class="page">
+  <div class="links">
+    <a href="https://sentientfutures.ai" target="_blank" rel="noopener">Sentient Futures</a>
+    <span style="color: hsl(30 15% 30%)">·</span>
+    <a href="https://compassionml.com" target="_blank" rel="noopener">CaML</a>
+  </div>
+  <div class="credit">© 2026 · Curated jointly by Sentient Futures and CaML</div>
+</footer>
+
+<script>
+  // ── MOCK DATA — illustrative placeholders, not real openings ────────
+  const JOBS = [
+    { title: "Senior AI Welfare Researcher", org: "Eleos AI Research", logo: "logos/eleos.png",
+      region: "Conceptual Cliffs", location: "Remote", type: "Full-time", posted: "2 days ago",
+      desc: "Lead empirical and conceptual research on AI moral patienthood. Design experiments probing model preferences and wellbeing; publish technical and policy-facing work.",
+      apply: "https://eleosai.org/careers" },
+
+    { title: "ML Engineer — Benchmarks", org: "CaML", logo: "logos/caml.png",
+      region: "Empirical Estuary", location: "Remote", type: "Full-time", posted: "5 days ago",
+      desc: "Build and maintain compassion benchmarks (AnimalHarmBench, MORU, TAC). Run evals across frontier models; ship pre-training intervention datasets.",
+      apply: "https://compassionml.com/jobs" },
+
+    { title: "Interpretability Researcher", org: "Reciprocal Research", logo: "logos/reciprocal-research.png",
+      region: "Empirical Estuary", location: "Remote-friendly · SF", type: "Full-time", posted: "1 week ago",
+      desc: "Apply mechanistic interpretability and psychometric methods to study AI consciousness. Strong ML/neuroscience background; comfort with rigorous experimental design.",
+      apply: "https://reciprocalresearch.org/careers" },
+
+    { title: "Research Fellow — Worldview Investigations", org: "Rethink Priorities", logo: "logos/rethink-priorities.png",
+      region: "Conceptual Cliffs", location: "Remote", type: "Full-time · 2-year fellowship", posted: "1 week ago",
+      desc: "Conduct cause prioritization research on digital minds and moral weights. Publish original work; collaborate with Bob Fischer and the WI team.",
+      apply: "https://rethinkpriorities.org/careers" },
+
+    { title: "Grants Programme Manager", org: "Longview Digital Sentience Fund", logo: "logos/longview.png",
+      region: "Funding Forest", location: "London or remote", type: "Full-time", posted: "3 days ago",
+      desc: "Lead grantmaking on digital sentience: source promising researchers and projects, run application reviews, support grantees post-award.",
+      apply: "https://www.longview.org/careers" },
+
+    { title: "Policy & Outreach Lead", org: "CMEP", logo: "logos/nyu-cmep.svg",
+      region: "Conceptual Cliffs", location: "New York · hybrid", type: "Full-time", posted: "2 weeks ago",
+      desc: "Translate research on nonhuman minds into policy briefs, op-eds, and advocacy materials. Coordinate with Jeff Sebo and external partners.",
+      apply: "https://nonhumanminds.org/jobs" },
+
+    { title: "Community Manager", org: "Sentient Futures", logo: "logos/sentient-futures.webp",
+      region: "Field-building Fjords", location: "Remote (Europe / US tz)", type: "Full-time", posted: "4 days ago",
+      desc: "Grow and steward the AI × animals / digital minds community: Slack, newsletter, summit ops (London, Bay Area, NYC), fellowship cohorts.",
+      apply: "https://www.sentientfutures.ai/jobs" },
+
+    { title: "AI × Animals Fellow (8-week cohort)", org: "AI x Animals fund", logo: null, short: "AA",
+      region: "Training Tidelands", location: "Remote", type: "8-week fellowship · stipend", posted: "Rolling",
+      desc: "Cohort programme for early-career people pivoting into AI × animal welfare work. Mentorship, weekly seminars, mini-grant for a final project.",
+      apply: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding" },
+
+    { title: "Director of Research", org: "Sentience Institute", logo: "logos/sentience-institute.ico",
+      region: "Conceptual Cliffs", location: "Remote", type: "Full-time · leadership", posted: "1 month ago",
+      desc: "Set the research agenda on moral circle expansion and digital minds. Lead a team of 3–5; oversee long-form reports and external collaborations.",
+      apply: "https://www.sentienceinstitute.org/jobs" },
+
+    { title: "S-Risk Researcher", org: "Center on Long-Term Risk", logo: "logos/clr.png",
+      region: "Conceptual Cliffs", location: "London or remote", type: "Full-time", posted: "2 weeks ago",
+      desc: "Research worst-case AI futures and digital suffering. Strong analytic / philosophical background; comfort with speculative scenario work.",
+      apply: "https://longtermrisk.org/careers" },
+
+    { title: "Animal Welfare Track — SFF S-Process Recommender", org: "Survival and Flourishing Fund", logo: "logos/sff.png",
+      region: "Funding Forest", location: "Remote", type: "Volunteer · honorarium", posted: "Application window open",
+      desc: "Help recommend grants in SFF's 2026 dedicated Animal Welfare track. Domain expertise in animal welfare and/or AI–animal intersection required.",
+      apply: "https://survivalandflourishing.fund/2026/application" },
+  ];
+
+  // ── Render ──────────────────────────────────────────────────
+  const grid = document.getElementById("jobGrid");
+  const empty = document.getElementById("empty");
+  const search = document.getElementById("search");
+  const count = document.getElementById("count");
+  const chips = document.querySelectorAll(".chip");
+
+  let activeRegion = "all";
+  let query = "";
+
+  function render() {
+    const q = query.trim().toLowerCase();
+    const filtered = JOBS.filter(j => {
+      const regionOk = activeRegion === "all" || j.region === activeRegion;
+      if (!regionOk) return false;
+      if (!q) return true;
+      return [j.title, j.org, j.location, j.region, j.type, j.desc]
+        .join(" ").toLowerCase().includes(q);
+    });
+
+    grid.innerHTML = "";
+    empty.style.display = filtered.length ? "none" : "block";
+    count.textContent = filtered.length + " role" + (filtered.length === 1 ? "" : "s");
+
+    for (const j of filtered) {
+      const a = document.createElement("a");
+      a.className = "job-card";
+      a.href = j.apply;
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      const head = document.createElement("div");
+      head.className = "head";
+      const logoBox = document.createElement("div");
+      logoBox.className = "logo";
+      if (j.logo) {
+        const img = document.createElement("img");
+        img.src = j.logo;
+        img.alt = "";
+        logoBox.appendChild(img);
+      } else {
+        const init = document.createElement("span");
+        init.className = "initials";
+        init.textContent = j.short || j.org[0];
+        logoBox.appendChild(init);
+      }
+      head.appendChild(logoBox);
+      const ht = document.createElement("div");
+      ht.className = "head-text";
+      const orgEl = document.createElement("p");
+      orgEl.className = "org-name";
+      orgEl.textContent = j.org;
+      const titleEl = document.createElement("h3");
+      titleEl.className = "title";
+      titleEl.textContent = j.title;
+      ht.appendChild(orgEl);
+      ht.appendChild(titleEl);
+      head.appendChild(ht);
+      a.appendChild(head);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      const region = document.createElement("span");
+      region.className = "meta-tag region";
+      region.textContent = j.region;
+      meta.appendChild(region);
+      [j.location, j.type].forEach(t => {
+        const tag = document.createElement("span");
+        tag.className = "meta-tag";
+        tag.textContent = t;
+        meta.appendChild(tag);
+      });
+      a.appendChild(meta);
+
+      const desc = document.createElement("p");
+      desc.className = "desc";
+      desc.textContent = j.desc;
+      a.appendChild(desc);
+
+      const foot = document.createElement("div");
+      foot.className = "footer";
+      const posted = document.createElement("span");
+      posted.textContent = "Posted " + j.posted;
+      const apply = document.createElement("span");
+      apply.className = "apply";
+      apply.textContent = "Apply →";
+      foot.appendChild(posted);
+      foot.appendChild(apply);
+      a.appendChild(foot);
+
+      grid.appendChild(a);
+    }
+  }
+
+  search.addEventListener("input", (e) => { query = e.target.value; render(); });
+  chips.forEach(c => c.addEventListener("click", () => {
+    chips.forEach(x => x.classList.remove("active"));
+    c.classList.add("active");
+    activeRegion = c.dataset.region;
+    render();
+  }));
+
+  render();
+</script>
+
+</body>
+</html>

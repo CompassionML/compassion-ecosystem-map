@@ -30,6 +30,45 @@
   a { color: hsl(var(--accent)); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
+  /* ── Top nav (Map · Jobs) ─────────────────────────────── */
+  nav.top {
+    border-bottom: 1px solid hsl(30 15% 18%);
+    background: hsl(28 18% 8% / 0.95);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  nav.top .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+  nav.top .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    color: hsl(32 45% 91%);
+    text-decoration: none;
+  }
+  nav.top .brand:hover { text-decoration: none; }
+  nav.top .links { display: flex; gap: 6px; }
+  nav.top a.nav-link {
+    color: hsl(32 35% 70%);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+  }
+  nav.top a.nav-link:hover { color: hsl(32 45% 91%); background: hsl(30 12% 14%); }
+  nav.top a.nav-link.active { color: hsl(32 45% 91%); background: hsl(30 12% 14%); }
+
   /* ── Page header / co-branding ────────────────────────── */
   header.page {
     text-align: center;
@@ -409,6 +448,16 @@
 </style>
 </head>
 <body>
+
+<nav class="top">
+  <div class="inner">
+    <a class="brand" href="./">Compassion AI Ecosystem</a>
+    <div class="links">
+      <a class="nav-link active" href="./">Map</a>
+      <a class="nav-link" href="./jobs.html">Jobs</a>
+    </div>
+  </div>
+</nav>
 
 <header class="page">
   <div class="co-brand">
