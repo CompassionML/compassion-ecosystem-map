@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Compassion AI Ecosystem</title>
+<meta name="description" content="A map of organisations working to reduce suffering for animals and digital minds through AI. A collaboration between Sentient Futures and CaML." />
+<meta property="og:title" content="The Compassion AI Ecosystem" />
+<meta property="og:description" content="A map of organisations working to reduce suffering for animals and digital minds through AI." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="logos/caml.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&family=Inter:wght@300;400;500;600;700&family=IM+Fell+English+SC&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: 25 45% 18%;
+    --parchment: 39 35% 78%;
+    --seal: 0 55% 38%;
+    --accent: 171 76% 40%;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: hsl(28 18% 8%);
+    color: hsl(32 45% 91%);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  a { color: hsl(var(--accent)); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Page header / co-branding ────────────────────────── */
+  header.page {
+    text-align: center;
+    padding: 56px 24px 36px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .co-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: hsl(30 12% 12%);
+    border: 1px solid hsl(30 15% 22%);
+    border-radius: 999px;
+    padding: 8px 18px;
+    margin-bottom: 28px;
+    font-size: 12px;
+    color: hsl(32 35% 68%);
+    letter-spacing: 0.04em;
+  }
+  .co-brand .label { text-transform: uppercase; letter-spacing: 0.12em; }
+  .co-brand .logos { display: inline-flex; align-items: center; gap: 8px; }
+  .co-brand .logos img {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    background: hsl(var(--parchment) / 0.05);
+  }
+  .co-brand .ampersand { color: hsl(32 25% 55%); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+  .co-brand .org-name {
+    color: hsl(32 45% 91%);
+    font-weight: 600;
+    font-size: 13px;
+  }
+  h1.page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .page-subtitle {
+    color: hsl(32 35% 75%);
+    font-size: clamp(15px, 2vw, 18px);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── Map frame ────────────────────────────────────────── */
+  .map-section {
+    max-width: 1400px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+  }
+  .map-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    border: 1px solid hsl(28 25% 22%);
+    border-radius: 6px;
+    box-shadow:
+      inset 0 0 0 1px hsl(28 30% 30% / 0.4),
+      0 16px 40px rgba(0,0,0,0.6);
+    background: linear-gradient(135deg, hsl(28 25% 18%), hsl(28 18% 11%));
+    padding: 14px;
+  }
+  .map-frame img.bitmap {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+  .pin-layer {
+    position: absolute;
+    inset: 14px;
+    pointer-events: none;
+  }
+
+  /* ── Title in cartouche ───────────────────────────────── */
+  .map-title {
+    position: absolute;
+    left: 13.88%;
+    top: 13.79%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'IM Fell English SC', 'Cormorant Garamond', serif;
+    color: hsl(var(--ink));
+    pointer-events: none;
+    line-height: 1.15;
+    letter-spacing: 0.06em;
+    font-size: 24px;
+  }
+  .map-title .t-small { font-size: 0.78em; letter-spacing: 0.18em; }
+  .map-title .t-mid { font-size: 1.0em; font-weight: 700; }
+
+  /* ── Region labels ────────────────────────────────────── */
+  .region-label-overlay {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.1;
+    color: hsl(var(--ink));
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    text-align: center;
+    background: hsl(var(--parchment) / 0.85);
+    padding: 3px 12px;
+    border-radius: 4px;
+    border: 0.5px solid hsl(var(--ink) / 0.25);
+    white-space: nowrap;
+  }
+
+  /* ── Legend ───────────────────────────────────────────── */
+  .map-legend {
+    position: absolute;
+    left: 9.39%;
+    top: 82.34%;
+    transform: translate(-50%, -50%);
+    color: hsl(var(--ink));
+    pointer-events: none;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .map-legend .leg-title {
+    font-style: italic;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .map-legend ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 15px;
+    line-height: 1.25;
+  }
+  .map-legend ul li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .map-legend ul li .ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .map-legend ul svg { display: block; width: 100%; height: 100%; }
+
+  /* ── Pins ─────────────────────────────────────────────── */
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: all;
+    cursor: pointer;
+    text-align: center;
+  }
+  .pin .seal {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: hsl(var(--parchment));
+    border: 2px solid hsl(var(--ink));
+    box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .pin .seal::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 0.7px solid hsl(var(--ink));
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .pin .seal img {
+    max-width: 84%;
+    max-height: 84%;
+    object-fit: contain;
+  }
+  .pin .seal .initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: hsl(var(--ink));
+  }
+  .pin .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.15;
+    color: hsl(var(--ink));
+    margin-top: 8px;
+    background: hsl(var(--parchment) / 0.92);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 0.5px solid hsl(var(--ink) / 0.3);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    max-width: 110px;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+    pointer-events: none;
+    display: inline-block;
+  }
+  .pin:hover .seal {
+    border-color: hsl(var(--seal));
+    border-width: 3px;
+    transform: scale(1.06);
+  }
+  .pin:hover .label { color: hsl(var(--seal)); }
+
+  /* ── Directory ────────────────────────────────────────── */
+  section.directory {
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+  }
+  section.directory h2,
+  section.about h2,
+  section.submit h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 700;
+    margin: 0 0 24px;
+    letter-spacing: -0.005em;
+  }
+  .region-group {
+    margin-bottom: 36px;
+  }
+  .region-group .region-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: hsl(var(--accent));
+    padding: 4px 10px;
+    border: 1px solid hsl(var(--accent) / 0.4);
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .org-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .org-card {
+    background: hsl(30 12% 11%);
+    border: 1px solid hsl(30 15% 22%);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .org-card .head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .org-card .org-logo {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: hsl(30 10% 16%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .org-card .org-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .org-card .org-logo .initials { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: hsl(32 45% 91%); }
+  .org-card .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+  }
+  .org-card .name a { color: inherit; }
+  .org-card .bio {
+    font-size: 14px;
+    line-height: 1.55;
+    color: hsl(32 35% 80%);
+    margin: 0;
+  }
+  .org-card .visit {
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: auto;
+  }
+
+  /* ── About / Submit ───────────────────────────────────── */
+  section.about,
+  section.submit {
+    max-width: 760px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+  }
+  section.about p,
+  section.submit p {
+    color: hsl(32 35% 80%);
+    font-size: 16px;
+  }
+  .submit-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--accent));
+    color: hsl(28 18% 8%);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .submit-cta:hover { text-decoration: none; opacity: 0.92; }
+
+  /* ── Footer ───────────────────────────────────────────── */
+  footer.page {
+    border-top: 1px solid hsl(30 15% 22%);
+    padding: 32px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: hsl(32 25% 60%);
+  }
+  footer.page .links { display: inline-flex; gap: 16px; margin-bottom: 8px; }
+  footer.page .credit { margin-top: 6px; color: hsl(32 20% 50%); font-size: 12px; }
+
+  /* ── Mobile ────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .map-title { font-size: 16px; }
+    .region-label-overlay { font-size: 10px; padding: 2px 7px; letter-spacing: 0.05em; }
+    .map-legend .leg-title { font-size: 13px; }
+    .map-legend ul { font-size: 10px; gap: 2px; }
+    .map-legend ul li .ico { width: 12px; height: 11px; }
+    .pin .seal { width: 38px; height: 38px; }
+    .pin .seal::after { inset: 3px; }
+    .pin .seal .initials { font-size: 16px; }
+    .pin .label { font-size: 11px; max-width: 80px; padding: 1px 6px; margin-top: 5px; }
+  }
+  @media (max-width: 480px) {
+    .map-title { font-size: 11px; }
+    .region-label-overlay { font-size: 8px; padding: 1px 5px; }
+    .map-legend { display: none; }
+    .pin .seal { width: 28px; height: 28px; }
+    .pin .seal::after { inset: 2px; }
+    .pin .seal .initials { font-size: 12px; }
+    .pin .label { font-size: 10px; max-width: 64px; padding: 1px 5px; margin-top: 3px; }
+    .co-brand { font-size: 11px; padding: 6px 12px; gap: 8px; }
+    .co-brand .logos img { height: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <div class="co-brand">
+    <span class="label">A collaboration between</span>
+    <span class="logos">
+      <img src="logos/sentient-futures.webp" alt="Sentient Futures" />
+      <span class="org-name">Sentient Futures</span>
+    </span>
+    <span class="ampersand">×</span>
+    <span class="logos">
+      <img src="logos/caml.png" alt="CaML" />
+      <span class="org-name">CaML</span>
+    </span>
+  </div>
+  <h1 class="page-title">The Compassion AI Ecosystem</h1>
+  <p class="page-subtitle">A curated map of organisations working to reduce suffering for animals and digital minds through AI research, advocacy, and field-building.</p>
+</header>
+
+<section class="map-section">
+  <div class="map-frame">
+    <img class="bitmap" src="aimapBlank.png" alt="Compassion AI Ecosystem map" />
+    <div class="pin-layer" id="pinLayer">
+      <div class="map-title">
+        <div class="t-small">A MAP OF THE</div>
+        <div class="t-mid">COMPASSION AI</div>
+        <div class="t-small">ECOSYSTEM</div>
+      </div>
+
+      <div class="region-label-overlay" style="left: 65%; top: 26%;">Funding Forest</div>
+      <div class="region-label-overlay" style="left: 47.85%; top: 49.11%;">Conceptual Cliffs</div>
+      <div class="region-label-overlay" style="left: 76.17%; top: 47.97%;">Field-building Fjords</div>
+      <div class="region-label-overlay" style="left: 28.08%; top: 67.46%;">Empirical Estuary</div>
+      <div class="region-label-overlay" style="left: 74.04%; top: 69.26%;">Training Tidelands</div>
+
+      <div class="map-legend">
+        <div class="leg-title">Legend</div>
+        <ul>
+          <li>
+            <span class="ico"><svg viewBox="-7 -6 14 12"><path d="M -5 4 L -2 -1 L 0 -4 L 3 0 L 5 4 Z" fill="none" stroke="currentColor" stroke-width="0.7"/></svg></span>
+            <span>Mountains</span>
+          </li>
+          <li>
+            <span class="ico"><svg viewBox="-5 -6 10 12"><path d="M -3 -1 L 0 -5 L 3 -1 Z" fill="none" stroke="currentColor" stroke-width="0.7"/><path d="M -2.5 2 L 0 -2 L 2.5 2 Z" fill="none" stroke="currentColor" stroke-width="0.7"/><line x1="0" y1="2" x2="0" y2="5" stroke="currentColor" stroke-width="0.7"/></svg></span>
+            <span>Forest</span>
+          </li>
+          <li>
+            <span class="ico"><svg viewBox="-6 -5 12 10"><circle cx="-3" cy="0" r="1.4" fill="currentColor"/><circle cx="3" cy="0" r="1.4" fill="currentColor"/><circle cx="0" cy="-2.5" r="1" fill="currentColor"/></svg></span>
+            <span>Settlements</span>
+          </li>
+          <li>
+            <span class="ico"><svg viewBox="-7 -5 14 10"><path d="M -6 0 q 2 -2 4 0 t 4 0 t 4 0" fill="none" stroke="currentColor" stroke-width="0.7"/></svg></span>
+            <span>Waves</span>
+          </li>
+          <li>
+            <span class="ico"><svg viewBox="-7 -6 14 12"><path d="M -6 4 L -4 0 L -2 3 L 0 -2 L 2 1 L 4 -3 L 6 4" fill="none" stroke="currentColor" stroke-width="0.7"/></svg></span>
+            <span>Cliffs</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="directory">
+  <h2>The organisations</h2>
+  <div id="directoryRoot"></div>
+</section>
+
+<section class="about">
+  <h2>About this map</h2>
+  <p>Every organisation listed works on preventing suffering to animals or digital minds through AI — whether through research, advocacy, building tools, funding, or field-building. Orgs working on animal welfare more broadly, or AI safety unrelated to sentience, sit just outside the scope. The bar is strict on purpose.</p>
+  <p>Curated by <a href="https://sentientfutures.ai" target="_blank" rel="noopener">Sentient Futures</a> and <a href="https://compassionml.com" target="_blank" rel="noopener">CaML</a>. The list is a snapshot — emerging orgs are added as they meet the bar.</p>
+</section>
+
+<section class="submit">
+  <h2>Submit an organisation</h2>
+  <p>Know an org that should be here? Send us a note with the name, website, and a sentence on what they do.</p>
+  <a class="submit-cta" href="mailto:compassioninmachinelearning@gmail.com?subject=Compassion%20AI%20Ecosystem%20%E2%80%94%20submission&body=Org%20name%3A%20%0AWebsite%3A%20%0AWhat%20they%20do%20(1-2%20sentences)%3A%20%0AWhich%20region%20fits%20best%20(Conceptual%20Cliffs%2C%20Empirical%20Estuary%2C%20Funding%20Forest%2C%20Field-building%20Fjords%2C%20Training%20Tidelands)%3A%20%0AWhy%20it%20belongs%20on%20the%20map%3A%20">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Email a submission
+  </a>
+</section>
+
+<footer class="page">
+  <div class="links">
+    <a href="https://sentientfutures.ai" target="_blank" rel="noopener">Sentient Futures</a>
+    <span style="color: hsl(30 15% 30%)">·</span>
+    <a href="https://compassionml.com" target="_blank" rel="noopener">CaML</a>
+  </div>
+  <div class="credit">© 2026 · Curated jointly by Sentient Futures and CaML</div>
+</footer>
+
+<script>
+  const ORGS = [
+    // Conceptual Cliffs
+    { name: "Eleos AI Research", short: "E",  logo: "logos/eleos.png",                 x: 57.61, y: 43.54, region: "Conceptual Cliffs", url: "https://eleosai.org/", bio: "A nonprofit dedicated to understanding and addressing the potential wellbeing and moral patienthood of AI systems, building deeper understanding of AI sentience and developing tools and recommendations for industry leaders and policymakers." },
+    { name: "Sentience Institute", short: "S", logo: "logos/sentience-institute.ico",  x: 42.76, y: 57.31, region: "Conceptual Cliffs", url: "https://www.sentienceinstitute.org/", bio: "A nonprofit, interdisciplinary think tank researching long-term social and technological change, particularly digital minds and moral circle expansion." },
+    { name: "Rethink Priorities", short: "R", logo: "logos/rethink-priorities.png",    x: 50,    y: 42,    region: "Conceptual Cliffs", url: "https://rethinkpriorities.org/", bio: "Their Worldview Investigations team leads moral weights and digital minds research, including work on AI moral patienthood." },
+    { name: "CMEP",               short: "M", logo: "logos/nyu-cmep.svg",              x: 50.26, y: 58.03, region: "Conceptual Cliffs", url: "https://nonhumanminds.org/", bio: "The Center for Mind, Ethics, and Policy conducts and supports foundational research on the nature and intrinsic value of nonhuman minds, including biological and artificial minds. Directed by Jeff Sebo." },
+    { name: "Center on Long-Term Risk", short: "C", logo: "logos/clr.png",             x: 42.24, y: 42.49, region: "Conceptual Cliffs", url: "https://longtermrisk.org/", bio: "Aims to address worst-case risks from the development and deployment of advanced AI systems through interdisciplinary research, grantmaking, and community building. Focuses on s-risks and digital suffering." },
+
+    // Empirical Estuary
+    { name: "CaML",                short: "Ca", logo: "logos/caml.png",                x: 29.39, y: 74.69, region: "Empirical Estuary", url: "https://www.compassionml.com/", bio: "Compassion in Machine Learning builds benchmarks (AnimalHarmBench, MORU, TAC) and pre-training interventions to ensure AI systems reflect compassion for all sentient beings." },
+    { name: "Reciprocal Research", short: "RR", logo: "logos/reciprocal-research.png", x: 25.56, y: 57.22, region: "Empirical Estuary", url: "https://reciprocalresearch.org/", bio: "Developing the empirical science of AI consciousness — mechanistic interpretability, computational neuroscience, and psychometric methods applied to AI moral status." },
+
+    // Funding Forest
+    { name: "AI x Animals", short: "AA", logo: null,                  x: 55.81, y: 22.03, region: "Funding Forest", url: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding", bio: "An independent pooled fund (with an 8-week fellowship arm) issuing $10–50k grants for projects at the AI × animal welfare intersection." },
+    { name: "Survival and Flourishing Fund", short: "Sf", logo: "logos/sff.png", x: 76.57, y: 26.75, region: "Funding Forest", url: "https://survivalandflourishing.fund/", bio: "A grantmaking platform funded primarily by Jaan Tallinn. The 2026 round includes a dedicated Animal Welfare track." },
+    { name: "Longview Digital Sentience Fund", short: "Lv", logo: "logos/longview.png", x: 66, y: 35, region: "Funding Forest", url: "https://www.longview.org/fund/digital-sentience-fund/", bio: "Longview Philanthropy's dedicated fund for digital sentience — grants for research, policy, and field-building on the moral status and wellbeing of AI systems." },
+
+    // Field-building Fjords ⇄ Training Tidelands (Sentient Futures straddles)
+    { name: "Sentient Futures", short: "Sn", logo: "logos/sentient-futures.webp", x: 74.95, y: 59.25, region: "Field-building Fjords & Training Tidelands", url: "https://www.sentientfutures.ai/", bio: "An international field-building organisation creating a thriving ecosystem where researchers, advocates, and industry professionals can collaborate to reduce suffering for all sentient beings. Runs summits, fellowships, and a Slack community at the AI × animals / digital minds intersection." },
+  ];
+
+  // ── Render pins on the map ───────────────────────────────────
+  const pinLayer = document.getElementById("pinLayer");
+  for (const org of ORGS) {
+    const pin = document.createElement("div");
+    pin.className = "pin";
+    pin.style.left = org.x + "%";
+    pin.style.top  = org.y + "%";
+    pin.title = org.name;
+
+    const seal = document.createElement("div");
+    seal.className = "seal";
+    if (org.logo) {
+      const img = document.createElement("img");
+      img.src = org.logo;
+      img.alt = org.name + " logo";
+      seal.appendChild(img);
+    } else {
+      const span = document.createElement("span");
+      span.className = "initials";
+      span.textContent = org.short;
+      seal.appendChild(span);
+    }
+    const label = document.createElement("div");
+    label.className = "label";
+    label.textContent = org.name;
+
+    pin.appendChild(seal);
+    pin.appendChild(label);
+
+    // Click pin → scroll directory card into view
+    pin.addEventListener("click", () => {
+      const id = "org-" + org.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.transition = "background 0.4s";
+        el.style.background = "hsl(171 50% 20%)";
+        setTimeout(() => el.style.background = "", 1400);
+      }
+    });
+
+    pinLayer.appendChild(pin);
+  }
+
+  // ── Render directory grouped by region ────────────────────────
+  const directoryRoot = document.getElementById("directoryRoot");
+  const REGION_ORDER = [
+    "Conceptual Cliffs",
+    "Empirical Estuary",
+    "Funding Forest",
+    "Field-building Fjords & Training Tidelands",
+  ];
+  for (const region of REGION_ORDER) {
+    const orgsInRegion = ORGS.filter(o => o.region === region);
+    if (!orgsInRegion.length) continue;
+    const group = document.createElement("div");
+    group.className = "region-group";
+    const tag = document.createElement("span");
+    tag.className = "region-tag";
+    tag.textContent = region;
+    group.appendChild(tag);
+
+    const grid = document.createElement("div");
+    grid.className = "org-grid";
+    for (const org of orgsInRegion) {
+      const card = document.createElement("div");
+      card.className = "org-card";
+      card.id = "org-" + org.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
+
+      const head = document.createElement("div");
+      head.className = "head";
+      const logoBox = document.createElement("div");
+      logoBox.className = "org-logo";
+      if (org.logo) {
+        const img = document.createElement("img");
+        img.src = org.logo;
+        img.alt = "";
+        logoBox.appendChild(img);
+      } else {
+        const initials = document.createElement("span");
+        initials.className = "initials";
+        initials.textContent = org.short;
+        logoBox.appendChild(initials);
+      }
+      head.appendChild(logoBox);
+
+      const name = document.createElement("div");
+      name.className = "name";
+      const a = document.createElement("a");
+      a.href = org.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = org.name;
+      name.appendChild(a);
+      head.appendChild(name);
+      card.appendChild(head);
+
+      const bio = document.createElement("p");
+      bio.className = "bio";
+      bio.textContent = org.bio;
+      card.appendChild(bio);
+
+      const visit = document.createElement("div");
+      visit.className = "visit";
+      const link = document.createElement("a");
+      link.href = org.url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "Visit website →";
+      visit.appendChild(link);
+      card.appendChild(visit);
+
+      grid.appendChild(card);
+    }
+    group.appendChild(grid);
+    directoryRoot.appendChild(group);
+  }
+</script>
+
+</body>
+</html>
