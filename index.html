@@ -393,6 +393,206 @@
     color: hsl(32 35% 80%);
     font-size: 16px;
   }
+  /* ── Admin panel (visible with ?admin=1) ──────────────── */
+  .admin-trigger {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: hsl(28 18% 8%);
+    border: 1px solid hsl(var(--accent) / 0.6);
+    color: hsl(var(--accent));
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    z-index: 30;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    transition: transform 0.15s, background 0.15s;
+  }
+  body.admin-on .admin-trigger { display: flex; }
+  .admin-trigger:hover { transform: scale(1.08) rotate(45deg); background: hsl(var(--accent)); color: hsl(28 18% 8%); }
+  .admin-trigger svg { width: 18px; height: 18px; }
+
+  .admin-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(440px, 100vw);
+    height: 100vh;
+    background: hsl(28 14% 10%);
+    border-left: 1px solid hsl(30 15% 22%);
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .admin-panel.open { transform: translateX(0); }
+  .admin-panel header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid hsl(30 15% 22%);
+  }
+  .admin-panel h3 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .admin-panel .close {
+    background: none;
+    border: none;
+    color: hsl(32 35% 70%);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+  }
+  .admin-panel .actions {
+    padding: 12px 20px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid hsl(30 15% 22%);
+    flex-wrap: wrap;
+  }
+  .admin-panel button.action {
+    flex: 1;
+    min-width: 90px;
+    background: hsl(30 12% 14%);
+    border: 1px solid hsl(30 15% 22%);
+    color: hsl(32 45% 91%);
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .admin-panel button.action:hover { background: hsl(30 12% 18%); border-color: hsl(var(--accent) / 0.5); }
+  .admin-panel button.action.primary {
+    background: hsl(var(--accent));
+    border-color: hsl(var(--accent));
+    color: hsl(28 18% 8%);
+    font-weight: 600;
+  }
+  .admin-panel button.action.primary:hover { opacity: 0.92; background: hsl(var(--accent)); }
+  .admin-panel .list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 20px 20px;
+  }
+  .admin-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid hsl(30 15% 22%);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: hsl(30 10% 12%);
+  }
+  .admin-row .row-logo {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: hsl(30 10% 16%);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+  }
+  .admin-row .row-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .admin-row .row-logo .initials { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 15px; }
+  .admin-row .row-text { flex: 1; min-width: 0; }
+  .admin-row .row-text .name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .admin-row .row-text .meta { font-size: 11px; color: hsl(32 25% 60%); font-family: 'JetBrains Mono', monospace; }
+  .admin-row .row-actions { display: flex; gap: 6px; }
+  .admin-row button.row-btn {
+    background: hsl(30 12% 14%);
+    border: 1px solid hsl(30 15% 22%);
+    color: hsl(32 45% 91%);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+  }
+  .admin-row button.row-btn:hover { background: hsl(30 12% 18%); border-color: hsl(var(--accent) / 0.5); }
+  .admin-row button.row-btn.danger { color: hsl(0 60% 75%); border-color: hsl(0 40% 28%); }
+  .admin-row button.row-btn.danger:hover { background: hsl(0 50% 18%); border-color: hsl(0 60% 50%); }
+
+  .admin-form {
+    padding: 16px 20px 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .admin-form label {
+    display: block;
+    font-size: 11px;
+    color: hsl(32 25% 70%);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 12px 0 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .admin-form input,
+  .admin-form select,
+  .admin-form textarea {
+    width: 100%;
+    background: hsl(30 10% 12%);
+    border: 1px solid hsl(30 15% 22%);
+    color: hsl(32 45% 91%);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .admin-form textarea { min-height: 90px; resize: vertical; }
+  .admin-form input:focus,
+  .admin-form select:focus,
+  .admin-form textarea:focus { outline: none; border-color: hsl(var(--accent)); }
+  .admin-form .row { display: flex; gap: 10px; }
+  .admin-form .row > div { flex: 1; }
+  .admin-form .form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid hsl(30 15% 22%);
+  }
+  .admin-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .admin-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .admin-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: hsl(var(--accent));
+    color: hsl(28 18% 8%);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    z-index: 300;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  .admin-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
   .submit-cta {
     display: inline-flex;
     align-items: center;
@@ -479,6 +679,9 @@
 
 <section class="map-section">
   <div class="map-frame">
+    <button class="admin-trigger" id="adminTrigger" title="Admin · add / edit / remove orgs" aria-label="Admin panel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
     <img class="bitmap" src="aimapBlank.png" alt="Compassion AI Ecosystem map" />
     <div class="pin-layer" id="pinLayer">
       <div class="map-title">
@@ -542,6 +745,62 @@
   </a>
 </section>
 
+<!-- Admin panel (visible only with ?admin=1) -->
+<div class="admin-backdrop" id="adminBackdrop"></div>
+<aside class="admin-panel" id="adminPanel" aria-hidden="true">
+  <header>
+    <h3 id="adminTitle">Manage orgs</h3>
+    <button class="close" id="adminClose" aria-label="Close admin">&times;</button>
+  </header>
+
+  <div id="adminListView">
+    <div class="actions">
+      <button class="action primary" id="addOrgBtn">+ Add org</button>
+      <button class="action" id="exportBtn">Export JSON</button>
+      <button class="action" id="resetBtn">Reset</button>
+    </div>
+    <div class="list" id="adminList"></div>
+  </div>
+
+  <form class="admin-form" id="adminForm" style="display:none">
+    <label>Name</label>
+    <input name="name" required maxlength="200" />
+    <label>Short (initials shown when no logo)</label>
+    <input name="short" required maxlength="6" />
+    <label>Region</label>
+    <select name="region">
+      <option>Conceptual Cliffs</option>
+      <option>Empirical Estuary</option>
+      <option>Funding Forest</option>
+      <option>Field-building Fjords</option>
+      <option>Training Tidelands</option>
+      <option>Field-building Fjords & Training Tidelands</option>
+    </select>
+    <label>Website URL</label>
+    <input name="url" type="url" required />
+    <label>Logo path <span style="text-transform:none;letter-spacing:0;font-family:inherit;color:hsl(32 25% 55%)">(leave blank to fall back to initials)</span></label>
+    <input name="logo" />
+    <label>Bio</label>
+    <textarea name="bio" required></textarea>
+    <div class="row">
+      <div>
+        <label>Pin X %</label>
+        <input name="x" type="number" step="0.01" min="0" max="100" required />
+      </div>
+      <div>
+        <label>Pin Y %</label>
+        <input name="y" type="number" step="0.01" min="0" max="100" required />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="action primary" style="flex:1">Save</button>
+      <button type="button" class="action" id="formCancel" style="flex:0 0 auto">Cancel</button>
+    </div>
+  </form>
+</aside>
+
+<div class="admin-toast" id="adminToast">Saved</div>
+
 <footer class="page">
   <div class="links">
     <a href="https://sentientfutures.ai" target="_blank" rel="noopener">Sentient Futures</a>
@@ -552,7 +811,8 @@
 </footer>
 
 <script>
-  const ORGS = [
+  // Baked-in defaults. Admin edits override via localStorage.
+  const DEFAULT_ORGS = [
     // Conceptual Cliffs
     { name: "Eleos AI Research", short: "E",  logo: "logos/eleos.png",                 x: 57.61, y: 43.54, region: "Conceptual Cliffs", url: "https://eleosai.org/", bio: "A nonprofit dedicated to understanding and addressing the potential wellbeing and moral patienthood of AI systems, building deeper understanding of AI sentience and developing tools and recommendations for industry leaders and policymakers." },
     { name: "Sentience Institute", short: "S", logo: "logos/sentience-institute.ico",  x: 42.76, y: 57.31, region: "Conceptual Cliffs", url: "https://www.sentienceinstitute.org/", bio: "A nonprofit, interdisciplinary think tank researching long-term social and technological change, particularly digital minds and moral circle expansion." },
@@ -573,9 +833,25 @@
     { name: "Sentient Futures", short: "Sn", logo: "logos/sentient-futures.webp", x: 74.95, y: 59.25, region: "Field-building Fjords & Training Tidelands", url: "https://www.sentientfutures.ai/", bio: "An international field-building organisation creating a thriving ecosystem where researchers, advocates, and industry professionals can collaborate to reduce suffering for all sentient beings. Runs summits, fellowships, and a Slack community at the AI × animals / digital minds intersection." },
   ];
 
+  // Load any admin edits from localStorage (so the user's last edits persist
+  // across reloads in their browser). To bake edits into the source for
+  // everyone, export the JSON and paste it into DEFAULT_ORGS.
+  const STORAGE_KEY = "compassion-ecosystem.orgs.v1";
+  let ORGS = (() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return JSON.parse(JSON.stringify(DEFAULT_ORGS));
+  })();
+  function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(ORGS)); }
+
   // ── Render pins on the map ───────────────────────────────────
   const pinLayer = document.getElementById("pinLayer");
-  for (const org of ORGS) {
+  function renderPins() {
+    // Remove any existing pins (keep title/region labels/legend)
+    pinLayer.querySelectorAll(".pin").forEach(p => p.remove());
+    for (const org of ORGS) {
     const pin = document.createElement("div");
     pin.className = "pin";
     pin.style.left = org.x + "%";
@@ -615,6 +891,7 @@
     });
 
     pinLayer.appendChild(pin);
+    }
   }
 
   // ── Render directory grouped by region ────────────────────────
@@ -623,72 +900,237 @@
     "Conceptual Cliffs",
     "Empirical Estuary",
     "Funding Forest",
+    "Field-building Fjords",
+    "Training Tidelands",
     "Field-building Fjords & Training Tidelands",
   ];
-  for (const region of REGION_ORDER) {
-    const orgsInRegion = ORGS.filter(o => o.region === region);
-    if (!orgsInRegion.length) continue;
-    const group = document.createElement("div");
-    group.className = "region-group";
-    const tag = document.createElement("span");
-    tag.className = "region-tag";
-    tag.textContent = region;
-    group.appendChild(tag);
+  function renderDirectory() {
+    directoryRoot.innerHTML = "";
+    for (const region of REGION_ORDER) {
+      const orgsInRegion = ORGS.filter(o => o.region === region);
+      if (!orgsInRegion.length) continue;
+      const group = document.createElement("div");
+      group.className = "region-group";
+      const tag = document.createElement("span");
+      tag.className = "region-tag";
+      tag.textContent = region;
+      group.appendChild(tag);
 
-    const grid = document.createElement("div");
-    grid.className = "org-grid";
-    for (const org of orgsInRegion) {
-      const card = document.createElement("div");
-      card.className = "org-card";
-      card.id = "org-" + org.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
+      const grid = document.createElement("div");
+      grid.className = "org-grid";
+      for (const org of orgsInRegion) {
+        const card = document.createElement("div");
+        card.className = "org-card";
+        card.id = "org-" + org.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
 
-      const head = document.createElement("div");
-      head.className = "head";
-      const logoBox = document.createElement("div");
-      logoBox.className = "org-logo";
-      if (org.logo) {
-        const img = document.createElement("img");
-        img.src = org.logo;
-        img.alt = "";
-        logoBox.appendChild(img);
-      } else {
-        const initials = document.createElement("span");
-        initials.className = "initials";
-        initials.textContent = org.short;
-        logoBox.appendChild(initials);
+        const head = document.createElement("div");
+        head.className = "head";
+        const logoBox = document.createElement("div");
+        logoBox.className = "org-logo";
+        if (org.logo) {
+          const img = document.createElement("img");
+          img.src = org.logo;
+          img.alt = "";
+          logoBox.appendChild(img);
+        } else {
+          const initials = document.createElement("span");
+          initials.className = "initials";
+          initials.textContent = org.short;
+          logoBox.appendChild(initials);
+        }
+        head.appendChild(logoBox);
+
+        const name = document.createElement("div");
+        name.className = "name";
+        const a = document.createElement("a");
+        a.href = org.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = org.name;
+        name.appendChild(a);
+        head.appendChild(name);
+        card.appendChild(head);
+
+        const bio = document.createElement("p");
+        bio.className = "bio";
+        bio.textContent = org.bio;
+        card.appendChild(bio);
+
+        const visit = document.createElement("div");
+        visit.className = "visit";
+        const link = document.createElement("a");
+        link.href = org.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "Visit website →";
+        visit.appendChild(link);
+        card.appendChild(visit);
+
+        grid.appendChild(card);
       }
-      head.appendChild(logoBox);
-
-      const name = document.createElement("div");
-      name.className = "name";
-      const a = document.createElement("a");
-      a.href = org.url;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.textContent = org.name;
-      name.appendChild(a);
-      head.appendChild(name);
-      card.appendChild(head);
-
-      const bio = document.createElement("p");
-      bio.className = "bio";
-      bio.textContent = org.bio;
-      card.appendChild(bio);
-
-      const visit = document.createElement("div");
-      visit.className = "visit";
-      const link = document.createElement("a");
-      link.href = org.url;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = "Visit website →";
-      visit.appendChild(link);
-      card.appendChild(visit);
-
-      grid.appendChild(card);
+      group.appendChild(grid);
+      directoryRoot.appendChild(group);
     }
-    group.appendChild(grid);
-    directoryRoot.appendChild(group);
+  }
+
+  function rerenderAll() { renderPins(); renderDirectory(); }
+  rerenderAll();
+
+  // ── Admin panel (?admin=1) ────────────────────────────────────
+  const isAdmin = new URLSearchParams(window.location.search).get("admin") === "1";
+  if (isAdmin) {
+    document.body.classList.add("admin-on");
+
+    const trigger = document.getElementById("adminTrigger");
+    const panel = document.getElementById("adminPanel");
+    const backdrop = document.getElementById("adminBackdrop");
+    const closeBtn = document.getElementById("adminClose");
+    const listView = document.getElementById("adminListView");
+    const listEl = document.getElementById("adminList");
+    const addBtn = document.getElementById("addOrgBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const form = document.getElementById("adminForm");
+    const formCancel = document.getElementById("formCancel");
+    const title = document.getElementById("adminTitle");
+    const toast = document.getElementById("adminToast");
+
+    let editingIdx = null;
+
+    function openPanel() {
+      panel.classList.add("open");
+      backdrop.classList.add("open");
+      renderAdminList();
+      showList();
+    }
+    function closePanel() {
+      panel.classList.remove("open");
+      backdrop.classList.remove("open");
+    }
+    function showList() {
+      listView.style.display = "";
+      form.style.display = "none";
+      editingIdx = null;
+      title.textContent = "Manage orgs";
+    }
+    function showForm(idx) {
+      editingIdx = idx;
+      listView.style.display = "none";
+      form.style.display = "";
+      title.textContent = idx == null ? "Add an org" : "Edit org";
+      const org = idx == null
+        ? { name: "", short: "", region: "Conceptual Cliffs", url: "", logo: "", bio: "", x: 50, y: 50 }
+        : ORGS[idx];
+      form.elements.name.value = org.name || "";
+      form.elements.short.value = org.short || "";
+      form.elements.region.value = org.region || "Conceptual Cliffs";
+      form.elements.url.value = org.url || "";
+      form.elements.logo.value = org.logo || "";
+      form.elements.bio.value = org.bio || "";
+      form.elements.x.value = org.x ?? 50;
+      form.elements.y.value = org.y ?? 50;
+    }
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+
+    function renderAdminList() {
+      listEl.innerHTML = "";
+      ORGS.forEach((org, idx) => {
+        const row = document.createElement("div");
+        row.className = "admin-row";
+
+        const logo = document.createElement("div");
+        logo.className = "row-logo";
+        if (org.logo) {
+          const img = document.createElement("img");
+          img.src = org.logo;
+          img.alt = "";
+          logo.appendChild(img);
+        } else {
+          const ini = document.createElement("span");
+          ini.className = "initials";
+          ini.textContent = org.short;
+          logo.appendChild(ini);
+        }
+
+        const text = document.createElement("div");
+        text.className = "row-text";
+        text.innerHTML = `<div class="name">${org.name}</div>
+                          <div class="meta">${org.region} · (${(org.x).toFixed(1)}%, ${(org.y).toFixed(1)}%)</div>`;
+
+        const actions = document.createElement("div");
+        actions.className = "row-actions";
+        const editBtn = document.createElement("button");
+        editBtn.className = "row-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => showForm(idx);
+        const rmBtn = document.createElement("button");
+        rmBtn.className = "row-btn danger";
+        rmBtn.textContent = "Remove";
+        rmBtn.onclick = () => {
+          if (!confirm(`Remove "${org.name}" from the map?`)) return;
+          ORGS.splice(idx, 1);
+          persist();
+          rerenderAll();
+          renderAdminList();
+          showToast("Removed");
+        };
+        actions.appendChild(editBtn);
+        actions.appendChild(rmBtn);
+
+        row.appendChild(logo);
+        row.appendChild(text);
+        row.appendChild(actions);
+        listEl.appendChild(row);
+      });
+    }
+
+    trigger.addEventListener("click", openPanel);
+    closeBtn.addEventListener("click", closePanel);
+    backdrop.addEventListener("click", closePanel);
+    addBtn.addEventListener("click", () => showForm(null));
+    formCancel.addEventListener("click", showList);
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = {
+        name: form.elements.name.value.trim(),
+        short: form.elements.short.value.trim(),
+        region: form.elements.region.value,
+        url: form.elements.url.value.trim(),
+        logo: form.elements.logo.value.trim() || null,
+        bio: form.elements.bio.value.trim(),
+        x: parseFloat(form.elements.x.value),
+        y: parseFloat(form.elements.y.value),
+      };
+      if (editingIdx == null) ORGS.push(data);
+      else ORGS[editingIdx] = data;
+      persist();
+      rerenderAll();
+      renderAdminList();
+      showList();
+      showToast(editingIdx == null ? "Added" : "Saved");
+    });
+
+    exportBtn.addEventListener("click", () => {
+      const json = JSON.stringify(ORGS, null, 2);
+      navigator.clipboard.writeText(json).then(() => {
+        showToast("JSON copied to clipboard");
+      });
+      console.log("ORGS JSON:\n" + json);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      if (!confirm("Reset to the baked-in default orgs? Your local edits will be lost.")) return;
+      ORGS = JSON.parse(JSON.stringify(DEFAULT_ORGS));
+      localStorage.removeItem(STORAGE_KEY);
+      rerenderAll();
+      renderAdminList();
+      showToast("Reset");
+    });
   }
 </script>
 
