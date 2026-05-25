@@ -161,11 +161,69 @@
   }
   .filter-bar .count { color: hsl(32 25% 55%); font-size: 13px; margin-left: auto; }
 
+  /* ── Layout: sidebar + main ───────────────────────────── */
+  .layout {
+    max-width: 1240px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 232px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .sidebar {
+    position: sticky;
+    top: 72px;
+    background: hsl(30 12% 11%);
+    border: 1px solid hsl(30 15% 22%);
+    border-radius: 10px;
+    padding: 8px 16px 16px;
+  }
+  .sidebar .facet { padding: 12px 0; border-bottom: 1px solid hsl(30 15% 18%); }
+  .sidebar .facet:last-child { border-bottom: none; }
+  .sidebar .facet h4 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: hsl(32 25% 62%);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .sidebar label.check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 13px;
+    color: hsl(32 35% 82%);
+    cursor: pointer;
+  }
+  .sidebar label.check:hover { color: hsl(32 45% 91%); }
+  .sidebar label.check input { accent-color: hsl(var(--accent)); width: 15px; height: 15px; cursor: pointer; }
+  .sidebar label.check .n { margin-left: auto; font-size: 11px; color: hsl(32 25% 50%); font-family: 'JetBrains Mono', monospace; }
+  .sidebar .clear {
+    width: 100%;
+    margin-top: 8px;
+    background: none;
+    border: 1px solid hsl(30 15% 22%);
+    color: hsl(32 35% 70%);
+    padding: 7px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .sidebar .clear:hover { color: hsl(32 45% 91%); border-color: hsl(var(--accent) / 0.5); }
+
   /* ── Event cards ─────────────────────────────────────── */
   section.events {
     max-width: 1100px;
     margin: 0 auto 60px;
     padding: 0 24px;
+  }
+  @media (max-width: 820px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
   }
   .event-list {
     display: flex;
@@ -359,21 +417,20 @@
 
 <div class="filter-bar">
   <input class="search" id="search" type="search" placeholder="Search events, orgs, locations…" />
-  <div class="chips" id="typeChips">
-    <button class="chip active" data-type="all">All</button>
-    <button class="chip" data-type="Summit">Summits</button>
-    <button class="chip" data-type="Fellowship">Fellowships</button>
-    <button class="chip" data-type="Workshop">Workshops</button>
-    <button class="chip" data-type="Funding">Funding rounds</button>
-    <button class="chip" data-type="Talk">Talks</button>
-  </div>
+  <label class="upcoming-toggle" style="display:flex;align-items:center;gap:8px;font-size:13px;color:hsl(32 35% 78%);cursor:pointer">
+    <input type="checkbox" id="upcomingOnly" style="accent-color:hsl(var(--accent));width:15px;height:15px" />
+    Upcoming only
+  </label>
   <span class="count" id="count"></span>
 </div>
 
-<section class="events">
-  <div class="event-list" id="eventList"></div>
-  <div class="empty" id="empty" style="display:none">No events match those filters.</div>
-</section>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main>
+    <div class="event-list" id="eventList"></div>
+    <div class="empty" id="empty" style="display:none">No events match those filters.</div>
+  </main>
+</div>
 
 <section class="submit">
   <h2>Hosting an event?</h2>
@@ -401,7 +458,7 @@
       org: "Sentient Futures",
       date: "2026-05-22", endDate: "2026-05-24",
       location: "London, UK",
-      type: "Summit",
+      type: "Summit", loc: ["London"],
       desc: "Three-day summit for AI experts, consciousness researchers, animal advocates, and thinkers on steering AI for animals and digital minds. The headline gathering of the Compassion AI ecosystem in Europe.",
       url: "https://www.sentientfutures.ai/sfslondon2026" },
 
@@ -409,7 +466,7 @@
       org: "Sentient Futures",
       date: "2026-02-06", endDate: "2026-02-08",
       location: "San Francisco Bay Area",
-      type: "Summit",
+      type: "Summit", loc: ["Bay Area"],
       desc: "West coast edition of the SFS series. Three days of talks, workshops, and connections across the AI × animal welfare community.",
       url: "https://www.sentientfutures.ai/sfsbay2026" },
 
@@ -417,7 +474,7 @@
       org: "AI x Animals",
       date: "2026-03-09", endDate: "2026-05-04",
       location: "Remote (global)",
-      type: "Fellowship",
+      type: "Fellowship", loc: ["Online"],
       desc: "8-week training + project-incubation programme for early-career people at the AI × animal welfare intersection. Mentorship, weekly seminars, mini-grants. Rolling applications.",
       url: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding" },
 
@@ -425,7 +482,7 @@
       org: "Survival and Flourishing Fund",
       date: "2026-04-30",
       location: "Online application",
-      type: "Funding",
+      type: "Funding", loc: ["Online"],
       desc: "Dedicated $2–4M Animal Welfare grant round in SFF's 2026 S-Process. Applications close end-April; recommendations announced summer.",
       url: "https://survivalandflourishing.fund/2026/application" },
 
@@ -433,7 +490,7 @@
       org: "Longview Digital Sentience Fund",
       date: "2026-08-15",
       location: "Online application",
-      type: "Funding",
+      type: "Funding", loc: ["Online"],
       desc: "Quarterly grant round for research, policy, and field-building work on the moral status and wellbeing of AI systems.",
       url: "https://www.longview.org/fund/digital-sentience-fund/" },
 
@@ -441,7 +498,7 @@
       org: "CMEP",
       date: "2026-10-14", endDate: "2026-10-15",
       location: "NYU, New York",
-      type: "Workshop",
+      type: "Workshop", loc: ["New York"],
       desc: "Two-day academic gathering convening philosophers, AI researchers, and policymakers. Keynotes from Jeff Sebo and external collaborators.",
       url: "https://nonhumanminds.org/" },
 
@@ -449,7 +506,7 @@
       org: "Sentience Institute",
       date: "2026-09-17", endDate: "2026-09-19",
       location: "Virtual + select hubs",
-      type: "Workshop",
+      type: "Workshop", loc: ["Online"],
       desc: "Three-day symposium on moral circle expansion to digital minds. Talks, panels, hands-on workshop sessions.",
       url: "https://www.sentienceinstitute.org/" },
 
@@ -457,7 +514,7 @@
       org: "Center on Long-Term Risk",
       date: "2026-06-15", endDate: "2026-08-30",
       location: "London, UK",
-      type: "Fellowship",
+      type: "Fellowship", loc: ["London"],
       desc: "12-week residential programme on s-risk and digital suffering research. Mentored projects, weekly seminars, output published end-summer.",
       url: "https://longtermrisk.org/" },
 
@@ -465,7 +522,7 @@
       org: "Rethink Priorities",
       date: "2026-10-08", endDate: "2026-10-10",
       location: "Berkeley, CA",
-      type: "Workshop",
+      type: "Workshop", loc: ["Berkeley"],
       desc: "Invite-only workshop convening researchers working on moral weights, digital minds, and cross-species cause prioritization.",
       url: "https://rethinkpriorities.org/" },
 
@@ -473,7 +530,7 @@
       org: "CaML",
       date: "2026-07-22",
       location: "Virtual (Zoom)",
-      type: "Talk",
+      type: "Talk", loc: ["Online"],
       desc: "Quarterly public session on the latest AnimalHarmBench results across frontier models. Methodology deep-dive + Q&A with the CaML team.",
       url: "https://www.compassionml.com/" },
 
@@ -481,22 +538,84 @@
       org: "Reciprocal Research",
       date: "2026-06-25",
       location: "Online",
-      type: "Talk",
+      type: "Talk", loc: ["Online"],
       desc: "Public seminar on interpretability- and psychometrics-based approaches to detecting subjective experience in AI systems.",
       url: "https://reciprocalresearch.org/" },
   ];
 
-  // ── Render ──────────────────────────────────────────────────
+  // ── Facets ───────────────────────────────────────────────────
+  const FACETS = [
+    { key: "type", label: "Type",     valueOf: e => e.type },
+    { key: "loc",  label: "Location", valueOf: e => e.loc },
+  ];
+
   const list = document.getElementById("eventList");
   const empty = document.getElementById("empty");
   const search = document.getElementById("search");
   const count = document.getElementById("count");
-  const chips = document.querySelectorAll(".chip");
+  const sidebar = document.getElementById("sidebar");
+  const upcomingOnly = document.getElementById("upcomingOnly");
 
-  let activeType = "all";
   let query = "";
+  const selected = {};
+  FACETS.forEach(f => selected[f.key] = new Set());
+
+  function evValues(ev, facet) {
+    const v = facet.valueOf(ev);
+    return Array.isArray(v) ? v : [v];
+  }
 
   const monthShort = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+  function buildSidebar() {
+    sidebar.innerHTML = "";
+    for (const facet of FACETS) {
+      const values = new Set();
+      EVENTS.forEach(e => evValues(e, facet).forEach(v => values.add(v)));
+      const opts = [...values].sort();
+
+      const group = document.createElement("div");
+      group.className = "facet";
+      const h = document.createElement("h4");
+      h.textContent = facet.label;
+      group.appendChild(h);
+
+      for (const val of opts) {
+        const n = EVENTS.filter(e => evValues(e, facet).includes(val)).length;
+        const lab = document.createElement("label");
+        lab.className = "check";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.value = val;
+        cb.addEventListener("change", () => {
+          if (cb.checked) selected[facet.key].add(val);
+          else selected[facet.key].delete(val);
+          render();
+        });
+        const txt = document.createElement("span");
+        txt.textContent = val;
+        const num = document.createElement("span");
+        num.className = "n";
+        num.textContent = n;
+        lab.appendChild(cb);
+        lab.appendChild(txt);
+        lab.appendChild(num);
+        group.appendChild(lab);
+      }
+      sidebar.appendChild(group);
+    }
+    const clear = document.createElement("button");
+    clear.className = "clear";
+    clear.textContent = "Clear all filters";
+    clear.addEventListener("click", () => {
+      FACETS.forEach(f => selected[f.key].clear());
+      sidebar.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+      query = ""; search.value = "";
+      upcomingOnly.checked = false;
+      render();
+    });
+    sidebar.appendChild(clear);
+  }
 
   function fmtDateBlock(start, end) {
     const s = new Date(start + "T00:00:00");
@@ -525,8 +644,13 @@
   function render() {
     const q = query.trim().toLowerCase();
     const filtered = EVENTS.filter(e => {
-      const typeOk = activeType === "all" || e.type === activeType;
-      if (!typeOk) return false;
+      for (const facet of FACETS) {
+        const sel = selected[facet.key];
+        if (sel.size === 0) continue;
+        const vals = evValues(e, facet);
+        if (!vals.some(v => sel.has(v))) return false;
+      }
+      if (upcomingOnly.checked && isPast(e.date, e.endDate)) return false;
       if (!q) return true;
       return [e.title, e.org, e.location, e.type, e.desc]
         .join(" ").toLowerCase().includes(q);
@@ -576,13 +700,9 @@
   }
 
   search.addEventListener("input", (e) => { query = e.target.value; render(); });
-  chips.forEach(c => c.addEventListener("click", () => {
-    chips.forEach(x => x.classList.remove("active"));
-    c.classList.add("active");
-    activeType = c.dataset.type;
-    render();
-  }));
+  upcomingOnly.addEventListener("change", render);
 
+  buildSidebar();
   render();
 </script>
 
