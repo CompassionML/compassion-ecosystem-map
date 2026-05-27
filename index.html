@@ -450,6 +450,26 @@
     font-size: 16px;
   }
   /* ── Admin panel (visible with ?admin=1) ──────────────── */
+  /* In admin mode pins become draggable to reposition them. */
+  .admin-hint { display: none; }
+  body.admin-on .admin-hint {
+    display: block;
+    position: absolute;
+    left: 14px; right: 14px; top: 14px;
+    z-index: 75;
+    margin: 8px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: hsl(var(--accent) / 0.92);
+    color: hsl(28 18% 8%);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  }
+  body.admin-on .pin { cursor: grab; }
+  body.admin-on .pin.dragging { cursor: grabbing; z-index: 80; }
+  body.admin-on .pin.dragging .seal { box-shadow: 0 0 0 2px hsl(var(--accent)), 0 6px 18px rgba(0,0,0,0.5); }
   .admin-trigger {
     position: absolute;
     right: 18px;
@@ -738,6 +758,7 @@
     <button class="admin-trigger" id="adminTrigger" title="Admin · add / edit / remove orgs" aria-label="Admin panel">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
+    <div class="admin-hint" id="adminHint">Admin mode &middot; drag any pin to reposition it, then open the gear to Export JSON</div>
     <img class="bitmap" src="aimapBlank.png" alt="Compassion AI Ecosystem map" />
     <div class="pin-layer" id="pinLayer">
       <div class="map-title">
@@ -908,6 +929,7 @@
 
   // ── Render pins on the map ───────────────────────────────────
   const pinLayer = document.getElementById("pinLayer");
+  const ADMIN = new URLSearchParams(window.location.search).get("admin") === "1";
   function renderPins() {
     // Remove any existing pins (keep title/region labels/legend)
     pinLayer.querySelectorAll(".pin").forEach(p => p.remove());
@@ -951,6 +973,7 @@
 
     // Click pin → scroll directory card into view
     pin.addEventListener("click", () => {
+      if (pin._justDragged) return;   // ignore the click that ends a drag
       const id = "org-" + org.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
       const el = document.getElementById(id);
       if (el) {
@@ -960,6 +983,39 @@
         setTimeout(() => el.style.background = "", 1400);
       }
     });
+
+    // Admin mode: drag the pin to reposition it (updates org.x / org.y).
+    if (ADMIN) {
+      pin.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        const rect = pinLayer.getBoundingClientRect();
+        let moved = false;
+        pin.classList.add("dragging");
+        try { pin.setPointerCapture(e.pointerId); } catch (_) {}
+        const onMove = (ev) => {
+          moved = true;
+          const nx = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+          const ny = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+          org.x = Math.round(nx * 100) / 100;
+          org.y = Math.round(ny * 100) / 100;
+          pin.style.left = org.x + "%";
+          pin.style.top  = org.y + "%";
+        };
+        const onUp = () => {
+          pin.classList.remove("dragging");
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerup", onUp);
+          if (moved) {
+            persist();
+            if (window.__refreshAdminList) window.__refreshAdminList();
+            pin._justDragged = true;
+            setTimeout(() => { pin._justDragged = false; }, 60);
+          }
+        };
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+      });
+    }
 
     pinLayer.appendChild(pin);
     }
@@ -1048,7 +1104,7 @@
   rerenderAll();
 
   // ── Admin panel (?admin=1) ────────────────────────────────────
-  const isAdmin = new URLSearchParams(window.location.search).get("admin") === "1";
+  const isAdmin = ADMIN;
   if (isAdmin) {
     document.body.classList.add("admin-on");
 
@@ -1158,6 +1214,8 @@
         listEl.appendChild(row);
       });
     }
+    // Let a pin drag refresh the coordinate readout in the panel.
+    window.__refreshAdminList = renderAdminList;
 
     trigger.addEventListener("click", openPanel);
     closeBtn.addEventListener("click", closePanel);
