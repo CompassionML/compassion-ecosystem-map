@@ -875,6 +875,8 @@
     { name: "Rethink Priorities", short: "R", logo: "logos/rethink-priorities.png",    x: 50,    y: 42,    region: "Conceptual Cliffs", url: "https://rethinkpriorities.org/", bio: "Their Worldview Investigations team leads moral weights and digital minds research, including work on AI moral patienthood." },
     { name: "CMEP",               short: "M", logo: "logos/nyu-cmep.svg",              x: 50.26, y: 58.03, region: "Conceptual Cliffs", url: "https://nonhumanminds.org/", bio: "The Center for Mind, Ethics, and Policy conducts and supports foundational research on the nature and intrinsic value of nonhuman minds, including biological and artificial minds. Directed by Jeff Sebo." },
     { name: "Center on Long-Term Risk", short: "C", logo: "logos/clr.png",             x: 42.24, y: 42.49, region: "Conceptual Cliffs", url: "https://longtermrisk.org/", bio: "Aims to address worst-case risks from the development and deployment of advanced AI systems through interdisciplinary research, grantmaking, and community building. Focuses on s-risks and digital suffering." },
+    { name: "Cambridge Digital Minds", short: "CDM", logo: "logos/cambridge-digital-minds.png", x: 60, y: 53, region: "Conceptual Cliffs", url: "https://digitalminds.cam/", bio: "A research group at the Leverhulme Centre for the Future of Intelligence (led by Lucius Caviola) studying the perception and moral status of digital minds. Runs the Digital Minds Fellowship." },
+    { name: "Center for Reducing Suffering", short: "CRS", logo: "logos/crs.png", x: 37, y: 48, region: "Conceptual Cliffs", url: "https://centerforreducingsuffering.org/", bio: "A research organisation building a global community focused on reducing intense suffering, including the suffering of artificial sentience, through suffering-focused ethics and s-risk research." },
 
     // Empirical Estuary
     { name: "CaML",                short: "Ca", logo: "logos/caml.png",                x: 29.39, y: 74.69, region: "Empirical Estuary", url: "https://www.compassionml.com/", bio: "Compassion in Machine Learning builds benchmarks (AnimalHarmBench, MORU, TAC) and pre-training interventions to ensure AI systems reflect compassion for all sentient beings." },
@@ -884,15 +886,17 @@
     { name: "AI x Animals", short: "AA", logo: null,                  x: 55.81, y: 22.03, region: "Funding Forest", url: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding", bio: "An independent pooled fund (with an 8-week fellowship arm) issuing $10–50k grants for projects at the AI × animal welfare intersection." },
     { name: "Survival and Flourishing Fund", short: "Sf", logo: "logos/sff.png", x: 76.57, y: 26.75, region: "Funding Forest", url: "https://survivalandflourishing.fund/", bio: "A grantmaking platform funded primarily by Jaan Tallinn. The 2026 round includes a dedicated Animal Welfare track." },
     { name: "Longview Digital Sentience Fund", short: "Lv", logo: "logos/longview.png", x: 66, y: 35, region: "Funding Forest", url: "https://www.longview.org/fund/digital-sentience-fund/", bio: "Longview Philanthropy's dedicated fund for digital sentience: grants for research, policy, and field-building on the moral status and wellbeing of AI systems." },
+    { name: "Macroscopic Ventures", short: "Mv", logo: null, x: 72, y: 17, region: "Funding Forest", url: "https://macroscopic.org/", bio: "A Swiss nonprofit deploying up to $100M a year in grants and investments across AI welfare, cooperative AI, s-risks, and animal welfare. A core funder of digital-minds and animal-welfare work." },
 
     // Field-building Fjords ⇄ Training Tidelands (Sentient Futures straddles)
     { name: "Sentient Futures", short: "Sn", logo: "logos/sentient-futures.webp", x: 74.95, y: 59.25, region: "Field-building Fjords & Training Tidelands", url: "https://www.sentientfutures.ai/", bio: "An international field-building organisation creating a thriving ecosystem where researchers, advocates, and industry professionals can collaborate to reduce suffering for all sentient beings. Runs summits, fellowships, and a Slack community at the AI × animals / digital minds intersection." },
+    { name: "PRISM", short: "P", logo: "logos/prism.webp", x: 82, y: 42, region: "Field-building Fjords & Training Tidelands", url: "https://www.prism-global.com/", bio: "The Partnership for Research Into Sentient Machines, a nonprofit coalition building the field around AI sentience through research coordination, convening, and public engagement." },
   ];
 
   // Load any admin edits from localStorage (so the user's last edits persist
   // across reloads in their browser). To bake edits into the source for
   // everyone, export the JSON and paste it into DEFAULT_ORGS.
-  const STORAGE_KEY = "compassion-ecosystem.orgs.v1";
+  const STORAGE_KEY = "compassion-ecosystem.orgs.v2";
   let ORGS = (() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
