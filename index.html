@@ -634,6 +634,99 @@
   footer.page .links { display: inline-flex; gap: 16px; margin-bottom: 8px; }
   footer.page .credit { margin-top: 6px; color: hsl(32 20% 50%); font-size: 12px; }
 
+  /* ── Filter bar ───────────────────────────────────────── */
+  .filter-bar {
+    max-width: 1400px;
+    margin: 0 auto 18px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+  }
+  .filter-group { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .filter-group .fg-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: hsl(32 25% 58%);
+    margin-right: 4px;
+  }
+  .chip {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: hsl(32 40% 82%);
+    background: hsl(30 12% 14%);
+    border: 1px solid hsl(30 15% 24%);
+    border-radius: 999px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: hsl(var(--accent) / 0.6); }
+  .chip.on {
+    background: hsl(var(--accent) / 0.18);
+    border-color: hsl(var(--accent));
+    color: hsl(32 50% 92%);
+  }
+  .chip-dot, .k-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+  .dot-animals { background: hsl(28 62% 44%); }
+  .dot-digital-minds { background: hsl(171 70% 42%); }
+  .dot-both { background: linear-gradient(90deg, hsl(28 62% 44%) 0 50%, hsl(171 70% 42%) 50% 100%); }
+  .filter-search {
+    flex: 1;
+    min-width: 160px;
+    background: hsl(30 10% 12%);
+    border: 1px solid hsl(30 15% 24%);
+    color: hsl(32 45% 91%);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .filter-search:focus { outline: none; border-color: hsl(var(--accent)); }
+  .filter-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: hsl(32 25% 60%); font-family: 'JetBrains Mono', monospace; }
+  .filter-clear { background: none; border: none; color: hsl(var(--accent)); cursor: pointer; font-family: inherit; font-size: 12px; padding: 0; }
+  .filter-clear:hover { text-decoration: underline; }
+
+  /* ── Audience ring on pins (second dimension) ─────────── */
+  /* A coloured ring around each seal encodes who the org helps.
+     Colours match the key in "How to read this map" and the filter chips. */
+  .pin .seal-wrap { display: inline-block; border-radius: 50%; line-height: 0; vertical-align: top; }
+  .pin .seal-wrap.ring-animals,
+  .pin .seal-wrap.ring-digital-minds,
+  .pin .seal-wrap.ring-both { padding: 3px; }
+  .pin .seal-wrap.ring-animals { background: hsl(28 62% 44%); }
+  .pin .seal-wrap.ring-digital-minds { background: hsl(171 70% 42%); }
+  .pin .seal-wrap.ring-both { background: linear-gradient(90deg, hsl(28 62% 44%) 0 50%, hsl(171 70% 42%) 50% 100%); }
+
+  /* ── Filtered-out (dim) state ─────────────────────────── */
+  .pin.filtered-out { opacity: 0.1; filter: grayscale(0.6); pointer-events: none; transition: opacity 0.2s; }
+  .org-card.filtered-out, .region-group.filtered-out { display: none; }
+
+  /* ── Relationship overlay (hover only) ────────────────── */
+  .rel-layer { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; overflow: visible; }
+  .rel-layer path { fill: none; }
+  .pin-layer.rel-active .pin:not(.rel-on) { opacity: 0.22; transition: opacity 0.15s; }
+  .pin.rel-on { z-index: 75; }
+  .pin.rel-source .seal { border-color: hsl(var(--seal)); border-width: 3px; }
+
+  /* ── How to read this map ─────────────────────────────── */
+  section.howto { max-width: 920px; margin: 0 auto 44px; padding: 0 24px; }
+  section.howto .howto-card { background: hsl(30 12% 11%); border: 1px solid hsl(30 15% 22%); border-radius: 12px; padding: 22px 26px; }
+  section.howto h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3vw, 28px); font-weight: 700; margin: 0 0 12px; }
+  section.howto p { color: hsl(32 35% 80%); font-size: 15px; margin: 0 0 10px; }
+  section.howto ul { margin: 0 0 12px; padding-left: 18px; color: hsl(32 35% 80%); font-size: 15px; }
+  section.howto li { margin-bottom: 6px; }
+  section.howto .aud-keys { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 4px; }
+  section.howto .aud-key { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; color: hsl(32 40% 84%); }
+
   /* ── Mobile ────────────────────────────────────────────── */
   @media (max-width: 768px) {
     header.page { padding: 36px 16px 20px; }
@@ -647,6 +740,7 @@
     .pin .seal { width: 38px; height: 38px; }
     .pin .seal::after { inset: 3px; }
     .pin .seal .initials { font-size: 16px; }
+    .pin .seal-wrap.ring-animals, .pin .seal-wrap.ring-digital-minds, .pin .seal-wrap.ring-both { padding: 2px; }
     .pin .label { font-size: 11px; max-width: 80px; padding: 1px 6px; margin-top: 5px; }
     .org-grid { grid-template-columns: 1fr; gap: 12px; }
     .org-card { padding: 14px 16px; }
@@ -665,6 +759,7 @@
     .pin .seal { width: 28px; height: 28px; }
     .pin .seal::after { inset: 2px; }
     .pin .seal .initials { font-size: 12px; }
+    .pin .seal-wrap.ring-animals, .pin .seal-wrap.ring-digital-minds, .pin .seal-wrap.ring-both { padding: 1.5px; }
     .pin .label { font-size: 9px; max-width: 60px; padding: 1px 4px; margin-top: 3px; }
     .org-card { padding: 12px 14px; }
     .org-card .name { font-size: 16px; }
@@ -681,6 +776,13 @@
   <p class="page-subtitle">A curated map of organisations working to reduce suffering for animals and digital minds through AI research, advocacy, and field-building.</p>
 </header>
 
+<section class="filter-bar" id="filterBar">
+  <div class="filter-group" id="regionFilters"><span class="fg-label">Region</span></div>
+  <div class="filter-group" id="audienceFilters"><span class="fg-label">Helps</span></div>
+  <input class="filter-search" id="filterSearch" type="search" placeholder="Search organisations…" aria-label="Search organisations" />
+  <div class="filter-meta"><span id="filterCount"></span><button class="filter-clear" id="filterClear" hidden>Clear</button></div>
+</section>
+
 <section class="map-section">
   <div class="map-frame">
     <button class="admin-trigger" id="adminTrigger" title="Admin · add / edit / remove orgs" aria-label="Admin panel">
@@ -689,6 +791,7 @@
     <div class="admin-hint" id="adminHint">Admin mode &middot; drag any pin to reposition it, then open the gear to Export JSON</div>
     <img class="bitmap" src="aimapColor.png" alt="Compassion AI Ecosystem map" />
     <div class="pin-layer" id="pinLayer">
+      <svg class="rel-layer" id="relLayer" preserveAspectRatio="none" aria-hidden="true"></svg>
       <div class="map-title">
         <div class="t-small">A MAP OF THE</div>
         <div class="t-mid">COMPASSION AI</div>
@@ -727,6 +830,24 @@
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="howto">
+  <div class="howto-card">
+    <h2>How to read this map</h2>
+    <p>The map carries two dimensions, not one.</p>
+    <ul>
+      <li><strong>Where an org sits (its region) shows the kind of work it does:</strong> ideas and ethics on the Conceptual Cliffs, measurement in the Empirical Estuary, money in the Funding Forest, community in the Field-building Fjords, and model training in the Training Tidelands.</li>
+      <li><strong>The coloured ring around each pin shows who the org works to help:</strong> animals, digital minds, or both, using the colours in the key below. You can also filter by it above.</li>
+      <li>Within a region, the exact spot is cartographic licence, not a score. A pin further north or larger is not "better" or "bigger".</li>
+    </ul>
+    <div class="aud-keys">
+      <span class="aud-key"><span class="k-dot dot-animals"></span>Animals</span>
+      <span class="aud-key"><span class="k-dot dot-digital-minds"></span>Digital minds</span>
+      <span class="aud-key"><span class="k-dot dot-both"></span>Both</span>
+    </div>
+    <p style="margin-top:14px">Why a map rather than a list? The field is small and fast-moving, and it is easier to hold as terrain than as rows: the regions give a newcomer a mental model of what kinds of work exist, and hovering a pin shows how the organisations connect.</p>
   </div>
 </section>
 
@@ -781,6 +902,12 @@
       <option>Training Tidelands</option>
       <option>Field-building Fjords & Training Tidelands</option>
     </select>
+    <label>Helps (second dimension)</label>
+    <select name="audience">
+      <option value="animals">Animals</option>
+      <option value="digital-minds">Digital minds</option>
+      <option value="both">Both</option>
+    </select>
     <label>Website URL</label>
     <input name="url" type="url" required />
     <label>Logo path <span style="text-transform:none;letter-spacing:0;font-family:inherit;color:hsl(32 25% 55%)">(leave blank to fall back to initials)</span></label>
@@ -819,33 +946,48 @@
   // Baked-in defaults. Admin edits override via localStorage.
   const DEFAULT_ORGS = [
     // Conceptual Cliffs
-    { name: "Eleos AI Research", short: "E",  logo: "logos/eleos.png",                 x: 57.61, y: 43.54, region: "Conceptual Cliffs", url: "https://eleosai.org/", bio: "A nonprofit dedicated to understanding and addressing the potential wellbeing and moral patienthood of AI systems, building deeper understanding of AI sentience and developing tools and recommendations for industry leaders and policymakers." },
-    { name: "Sentience Institute", short: "S", logo: "logos/sentience-institute.ico",  x: 42.76, y: 57.31, region: "Conceptual Cliffs", url: "https://www.sentienceinstitute.org/", bio: "A nonprofit, interdisciplinary think tank researching long-term social and technological change, particularly digital minds and moral circle expansion." },
-    { name: "Rethink Priorities", short: "R", logo: "logos/rethink-priorities.png",    x: 50,    y: 42,    region: "Conceptual Cliffs", url: "https://rethinkpriorities.org/", bio: "Their Worldview Investigations team leads moral weights and digital minds research, including work on AI moral patienthood." },
-    { name: "CMEP",               short: "M", logo: "logos/nyu-cmep.svg",              x: 50.26, y: 58.03, region: "Conceptual Cliffs", url: "https://nonhumanminds.org/", bio: "The Center for Mind, Ethics, and Policy conducts and supports foundational research on the nature and intrinsic value of nonhuman minds, including biological and artificial minds. Directed by Jeff Sebo." },
-    { name: "Center on Long-Term Risk", short: "C", logo: "logos/clr.png",             x: 42.24, y: 42.49, region: "Conceptual Cliffs", url: "https://longtermrisk.org/", bio: "Aims to address worst-case risks from the development and deployment of advanced AI systems through interdisciplinary research, grantmaking, and community building. Focuses on s-risks and digital suffering." },
-    { name: "Cambridge Digital Minds", short: "CDM", logo: "logos/cambridge-digital-minds.png", x: 60, y: 53, region: "Conceptual Cliffs", url: "https://digitalminds.cam/", bio: "A research group at the Leverhulme Centre for the Future of Intelligence (led by Lucius Caviola) studying the perception and moral status of digital minds. Runs the Digital Minds Fellowship." },
-    { name: "Center for Reducing Suffering", short: "CRS", logo: "logos/crs.png", x: 37, y: 48, region: "Conceptual Cliffs", url: "https://centerforreducingsuffering.org/", bio: "A research organisation building a global community focused on reducing intense suffering, including the suffering of artificial sentience, through suffering-focused ethics and s-risk research." },
+    { name: "Eleos AI Research", short: "E",  logo: "logos/eleos.png",                 x: 57.61, y: 43.54, region: "Conceptual Cliffs", audience: "digital-minds", url: "https://eleosai.org/", bio: "A nonprofit dedicated to understanding and addressing the potential wellbeing and moral patienthood of AI systems, building deeper understanding of AI sentience and developing tools and recommendations for industry leaders and policymakers." },
+    { name: "Sentience Institute", short: "S", logo: "logos/sentience-institute.ico",  x: 42.76, y: 57.31, region: "Conceptual Cliffs", audience: "both", url: "https://www.sentienceinstitute.org/", bio: "A nonprofit, interdisciplinary think tank researching long-term social and technological change, particularly digital minds and moral circle expansion." },
+    { name: "Rethink Priorities", short: "R", logo: "logos/rethink-priorities.png",    x: 50,    y: 42,    region: "Conceptual Cliffs", audience: "both", url: "https://rethinkpriorities.org/", bio: "Their Worldview Investigations team leads moral weights and digital minds research, including work on AI moral patienthood." },
+    { name: "CMEP",               short: "M", logo: "logos/nyu-cmep.svg",              x: 50.26, y: 58.03, region: "Conceptual Cliffs", audience: "both", url: "https://nonhumanminds.org/", bio: "The Center for Mind, Ethics, and Policy conducts and supports foundational research on the nature and intrinsic value of nonhuman minds, including biological and artificial minds. Directed by Jeff Sebo." },
+    { name: "Center on Long-Term Risk", short: "C", logo: "logos/clr.png",             x: 42.24, y: 42.49, region: "Conceptual Cliffs", audience: "digital-minds", url: "https://longtermrisk.org/", bio: "Aims to address worst-case risks from the development and deployment of advanced AI systems through interdisciplinary research, grantmaking, and community building. Focuses on s-risks and digital suffering." },
+    { name: "Cambridge Digital Minds", short: "CDM", logo: "logos/cambridge-digital-minds.png", x: 60, y: 53, region: "Conceptual Cliffs", audience: "digital-minds", url: "https://digitalminds.cam/", bio: "A research group at the Leverhulme Centre for the Future of Intelligence (led by Lucius Caviola) studying the perception and moral status of digital minds. Runs the Digital Minds Fellowship." },
+    { name: "Center for Reducing Suffering", short: "CRS", logo: "logos/crs.png", x: 37, y: 48, region: "Conceptual Cliffs", audience: "both", url: "https://centerforreducingsuffering.org/", bio: "A research organisation building a global community focused on reducing intense suffering, including the suffering of artificial sentience, through suffering-focused ethics and s-risk research." },
 
     // Empirical Estuary
-    { name: "CaML",                short: "Ca", logo: "logos/caml.png",                x: 29.39, y: 74.69, region: "Empirical Estuary", url: "https://www.compassionml.com/", bio: "Compassion in Machine Learning builds benchmarks (AnimalHarmBench, MORU, TAC) and pre-training interventions to ensure AI systems reflect compassion for all sentient beings." },
-    { name: "Reciprocal Research", short: "RR", logo: "logos/reciprocal-research.png", x: 25.56, y: 57.22, region: "Empirical Estuary", url: "https://reciprocalresearch.org/", bio: "Developing the empirical science of AI consciousness: mechanistic interpretability, computational neuroscience, and psychometric methods applied to AI moral status." },
+    { name: "CaML",                short: "Ca", logo: "logos/caml.png",                x: 29.39, y: 74.69, region: "Empirical Estuary", audience: "both", url: "https://www.compassionml.com/", bio: "Compassion in Machine Learning builds benchmarks (AnimalHarmBench, MORU, TAC) and pre-training interventions to ensure AI systems reflect compassion for all sentient beings." },
+    { name: "Reciprocal Research", short: "RR", logo: "logos/reciprocal-research.png", x: 25.56, y: 57.22, region: "Empirical Estuary", audience: "digital-minds", url: "https://reciprocalresearch.org/", bio: "Developing the empirical science of AI consciousness: mechanistic interpretability, computational neuroscience, and psychometric methods applied to AI moral status." },
 
     // Funding Forest
-    { name: "AI x Animals", short: "AA", logo: null,                  x: 55.81, y: 22.03, region: "Funding Forest", url: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding", bio: "An independent pooled fund (with an 8-week fellowship arm) issuing $10–50k grants for projects at the AI × animal welfare intersection." },
-    { name: "Survival and Flourishing Fund", short: "Sf", logo: "logos/sff.png", x: 83.42, y: 28.64, region: "Funding Forest", url: "https://survivalandflourishing.fund/", bio: "A grantmaking platform funded primarily by Jaan Tallinn. The 2026 round includes a dedicated Animal Welfare track." },
-    { name: "Longview Digital Sentience Fund", short: "Lv", logo: "logos/longview.png", x: 66, y: 35, region: "Funding Forest", url: "https://www.longview.org/fund/digital-sentience-fund/", bio: "Longview Philanthropy's dedicated fund for digital sentience: grants for research, policy, and field-building on the moral status and wellbeing of AI systems." },
-    { name: "Macroscopic Ventures", short: "Mv", logo: "logos/macroscopic.svg", x: 75.62, y: 23.58, region: "Funding Forest", url: "https://macroscopic.org/", bio: "A Swiss nonprofit deploying up to $100M a year in grants and investments across AI welfare, cooperative AI, s-risks, and animal welfare. A core funder of digital-minds and animal-welfare work." },
+    { name: "AI x Animals", short: "AA", logo: null,                  x: 55.81, y: 22.03, region: "Funding Forest", audience: "animals", url: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding", bio: "An independent pooled fund (with an 8-week fellowship arm) issuing $10–50k grants for projects at the AI × animal welfare intersection." },
+    { name: "Survival and Flourishing Fund", short: "Sf", logo: "logos/sff.png", x: 83.42, y: 28.64, region: "Funding Forest", audience: "both", url: "https://survivalandflourishing.fund/", bio: "A grantmaking platform funded primarily by Jaan Tallinn. The 2026 round includes a dedicated Animal Welfare track." },
+    { name: "Longview Digital Sentience Fund", short: "Lv", logo: "logos/longview.png", x: 66, y: 35, region: "Funding Forest", audience: "digital-minds", url: "https://www.longview.org/fund/digital-sentience-fund/", bio: "Longview Philanthropy's dedicated fund for digital sentience: grants for research, policy, and field-building on the moral status and wellbeing of AI systems." },
+    { name: "Macroscopic Ventures", short: "Mv", logo: "logos/macroscopic.svg", x: 75.62, y: 23.58, region: "Funding Forest", audience: "both", url: "https://macroscopic.org/", bio: "A Swiss nonprofit deploying up to $100M a year in grants and investments across AI welfare, cooperative AI, s-risks, and animal welfare. A core funder of digital-minds and animal-welfare work." },
 
     // Field-building Fjords ⇄ Training Tidelands (Sentient Futures straddles)
-    { name: "Sentient Futures", short: "Sn", logo: "logos/sentient-futures.webp", x: 74.95, y: 59.25, region: "Field-building Fjords & Training Tidelands", url: "https://www.sentientfutures.ai/", bio: "An international field-building organisation creating a thriving ecosystem where researchers, advocates, and industry professionals can collaborate to reduce suffering for all sentient beings. Runs summits, fellowships, and a Slack community at the AI × animals / digital minds intersection." },
-    { name: "PRISM", short: "P", logo: "logos/prism.webp", x: 82, y: 42, region: "Field-building Fjords & Training Tidelands", url: "https://www.prism-global.com/", bio: "The Partnership for Research Into Sentient Machines, a nonprofit coalition building the field around AI sentience through research coordination, convening, and public engagement." },
+    { name: "Sentient Futures", short: "Sn", logo: "logos/sentient-futures.webp", x: 74.95, y: 59.25, region: "Field-building Fjords & Training Tidelands", audience: "both", url: "https://www.sentientfutures.ai/", bio: "An international field-building organisation creating a thriving ecosystem where researchers, advocates, and industry professionals can collaborate to reduce suffering for all sentient beings. Runs summits, fellowships, and a Slack community at the AI × animals / digital minds intersection." },
+    { name: "PRISM", short: "P", logo: "logos/prism.webp", x: 82, y: 42, region: "Field-building Fjords & Training Tidelands", audience: "digital-minds", url: "https://www.prism-global.com/", bio: "The Partnership for Research Into Sentient Machines, a nonprofit coalition building the field around AI sentience through research coordination, convening, and public engagement." },
   ];
+
+  // Funding / affiliation links between orgs. Drawn only while you hover an org.
+  // DRAFT — verify before deploy. type: "funds" | "program" | "collaborates".
+  const RELATIONSHIPS = [
+    { from: "Survival and Flourishing Fund", to: "CaML", type: "funds" },      // confirmed
+    { from: "Sentient Futures", to: "AI x Animals", type: "program" },         // AI x Animals fund/fellowship run by Sentient Futures
+    { from: "Longview Digital Sentience Fund", to: "CMEP", type: "funds" },     // confirmed
+  ];
+
+  // Second dimension: who each org primarily works to help.
+  const AUDIENCE_META = {
+    "animals":       { label: "Animals",       glyph: "paw" },
+    "digital-minds": { label: "Digital minds", glyph: "spark" },
+    "both":          { label: "Both",          glyph: "both" },
+  };
 
   // Load any admin edits from localStorage (so the user's last edits persist
   // across reloads in their browser). To bake edits into the source for
   // everyone, export the JSON and paste it into DEFAULT_ORGS.
-  const STORAGE_KEY = "compassion-ecosystem.orgs.v3";
+  const STORAGE_KEY = "compassion-ecosystem.orgs.v4";
   let ORGS = (() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -858,15 +1000,20 @@
   // ── Render pins on the map ───────────────────────────────────
   const pinLayer = document.getElementById("pinLayer");
   const ADMIN = new URLSearchParams(window.location.search).get("admin") === "1";
+  let pinByName = {};
   function renderPins() {
     // Remove any existing pins (keep title/region labels/legend)
     pinLayer.querySelectorAll(".pin").forEach(p => p.remove());
+    pinByName = {};
     for (const org of ORGS) {
     const pin = document.createElement("div");
     pin.className = "pin";
     pin.style.left = org.x + "%";
     pin.style.top  = org.y + "%";
     pin.title = org.name;
+    pin.dataset.org = org.name;
+    pin.dataset.region = org.region || "";
+    pin.dataset.audience = org.audience || "";
 
     const seal = document.createElement("div");
     seal.className = "seal";
@@ -881,10 +1028,6 @@
       span.textContent = org.short;
       seal.appendChild(span);
     }
-    const label = document.createElement("div");
-    label.className = "label";
-    label.textContent = org.name;
-
     // Hover tooltip with name, region, and short description
     const tip = document.createElement("div");
     tip.className = "pin-tip";
@@ -895,8 +1038,14 @@
     tip.querySelector(".tip-bio").textContent = shortBio;
     if (org.y < 30) pin.classList.add("tip-below");
 
-    pin.appendChild(seal);
-    pin.appendChild(label);
+    const sealWrap = document.createElement("div");
+    sealWrap.className = "seal-wrap";
+    if (org.audience && AUDIENCE_META[org.audience]) {
+      sealWrap.classList.add("ring-" + org.audience);
+      sealWrap.title = "Helps: " + AUDIENCE_META[org.audience].label;
+    }
+    sealWrap.appendChild(seal);
+    pin.appendChild(sealWrap);
     pin.appendChild(tip);
 
     // Click pin → scroll directory card into view
@@ -945,6 +1094,11 @@
       });
     }
 
+    pinByName[org.name] = pin;
+    if (!ADMIN) {
+      pin.addEventListener("pointerenter", () => drawRelations(org, pin));
+      pin.addEventListener("pointerleave", clearRelations);
+    }
     pinLayer.appendChild(pin);
     }
   }
@@ -1028,8 +1182,150 @@
     }
   }
 
-  function rerenderAll() { renderPins(); renderDirectory(); }
+  // ── Audience glyphs (second dimension) ───────────────────────
+  function audienceGlyph(a) {
+    if (a === "animals") {
+      return '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6.5" cy="9" r="2"/><circle cx="11" cy="6.3" r="2"/><circle cx="15.5" cy="6.3" r="2"/><circle cx="19" cy="10" r="1.7"/><path d="M11 11.5c-2.6 0-4.6 2-4.6 4.2 0 1.7 1.4 2.6 3 2.4.9-.12 1.1-.5 1.8-.5s.9.38 1.8.5c1.6.2 3-.7 3-2.4 0-2.2-2-4.2-4.6-4.2z"/></svg>';
+    }
+    if (a === "digital-minds") {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7.5" y="7.5" width="9" height="9" rx="1.8"/><line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/><line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/></svg>';
+    }
+    return '<svg viewBox="0 0 24 24"><circle cx="8" cy="11" r="2.4" fill="currentColor"/><circle cx="6" cy="7.5" r="1.5" fill="currentColor"/><circle cx="10" cy="7" r="1.5" fill="currentColor"/><rect x="13" y="8" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+  }
+
+  // ── Filtering (region · audience · search) ────────────────────
+  const filterState = { regions: new Set(), audiences: new Set(), text: "" };
+  function regionMatches(region) {
+    if (!filterState.regions.size) return true;
+    for (const r of filterState.regions) if (region && region.includes(r)) return true;
+    return false;
+  }
+  function audienceMatches(aud) {
+    if (!filterState.audiences.size) return true;
+    for (const a of filterState.audiences) {
+      if (a === aud) return true;
+      if (aud === "both" && (a === "animals" || a === "digital-minds")) return true;
+    }
+    return false;
+  }
+  function orgMatches(org) {
+    if (!regionMatches(org.region)) return false;
+    if (!audienceMatches(org.audience)) return false;
+    const t = filterState.text.trim().toLowerCase();
+    if (t && !((org.name + " " + (org.bio || "")).toLowerCase().includes(t))) return false;
+    return true;
+  }
+  function applyFilters() {
+    pinLayer.querySelectorAll(".pin").forEach(pin => {
+      const org = ORGS.find(o => o.name === pin.dataset.org);
+      pin.classList.toggle("filtered-out", org ? !orgMatches(org) : false);
+    });
+    directoryRoot.querySelectorAll(".region-group").forEach(group => {
+      let visible = 0;
+      group.querySelectorAll(".org-card").forEach(card => {
+        const org = ORGS.find(o => ("org-" + o.name.replace(/[^a-z0-9]/gi, "-").toLowerCase()) === card.id);
+        const ok = org ? orgMatches(org) : true;
+        card.classList.toggle("filtered-out", !ok);
+        if (ok) visible++;
+      });
+      group.classList.toggle("filtered-out", visible === 0);
+    });
+    const shown = ORGS.filter(orgMatches).length;
+    const countEl = document.getElementById("filterCount");
+    if (countEl) countEl.textContent = "Showing " + shown + " of " + ORGS.length;
+    const clearBtn = document.getElementById("filterClear");
+    if (clearBtn) clearBtn.hidden = !(filterState.regions.size || filterState.audiences.size || filterState.text.trim());
+  }
+  function toggleSet(set, val) { set.has(val) ? set.delete(val) : set.add(val); }
+  function buildFilters() {
+    const regionWrap = document.getElementById("regionFilters");
+    const audWrap = document.getElementById("audienceFilters");
+    if (!regionWrap || !audWrap) return;
+    ["Conceptual Cliffs", "Empirical Estuary", "Funding Forest", "Field-building Fjords", "Training Tidelands"].forEach(r => {
+      const chip = document.createElement("button");
+      chip.className = "chip";
+      chip.type = "button";
+      chip.textContent = r;
+      chip.onclick = () => { toggleSet(filterState.regions, r); chip.classList.toggle("on"); applyFilters(); };
+      regionWrap.appendChild(chip);
+    });
+    Object.entries(AUDIENCE_META).forEach(([key, meta]) => {
+      const chip = document.createElement("button");
+      chip.className = "chip";
+      chip.type = "button";
+      const dot = document.createElement("span");
+      dot.className = "chip-dot dot-" + key;
+      chip.appendChild(dot);
+      chip.appendChild(document.createTextNode(meta.label));
+      chip.onclick = () => { toggleSet(filterState.audiences, key); chip.classList.toggle("on"); applyFilters(); };
+      audWrap.appendChild(chip);
+    });
+    const search = document.getElementById("filterSearch");
+    if (search) search.addEventListener("input", () => { filterState.text = search.value; applyFilters(); });
+    const clearBtn = document.getElementById("filterClear");
+    if (clearBtn) clearBtn.addEventListener("click", () => {
+      filterState.regions.clear(); filterState.audiences.clear(); filterState.text = "";
+      if (search) search.value = "";
+      document.querySelectorAll(".filter-bar .chip.on").forEach(c => c.classList.remove("on"));
+      applyFilters();
+    });
+  }
+
+  // ── Relationships (drawn only while hovering an org) ──────────
+  function drawRelations(centerOrg, centerPin) {
+    if (centerPin.classList.contains("filtered-out")) return;
+    const edges = RELATIONSHIPS.filter(r => r.from === centerOrg.name || r.to === centerOrg.name);
+    if (!edges.length) return;
+    const rect = pinLayer.getBoundingClientRect();
+    const W = rect.width, H = rect.height;
+    const svg = document.getElementById("relLayer");
+    if (!svg) return;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.innerHTML = "";
+    pinLayer.classList.add("rel-active");
+    centerPin.classList.add("rel-on", "rel-source");
+    const cx = centerOrg.x / 100 * W, cy = centerOrg.y / 100 * H;
+    let drew = 0;
+    edges.forEach(e => {
+      const otherName = e.from === centerOrg.name ? e.to : e.from;
+      const otherPin = pinByName[otherName];
+      const otherOrg = ORGS.find(o => o.name === otherName);
+      if (!otherPin || !otherOrg || otherPin.classList.contains("filtered-out")) return;
+      const ox = otherOrg.x / 100 * W, oy = otherOrg.y / 100 * H;
+      const dx = ox - cx, dy = oy - cy, norm = Math.hypot(dx, dy) || 1;
+      const mx = (cx + ox) / 2, my = (cy + oy) / 2, bow = Math.min(55, norm * 0.16);
+      const ctrlx = mx - dy / norm * bow, ctrly = my + dx / norm * bow;
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M " + cx + " " + cy + " Q " + ctrlx + " " + ctrly + " " + ox + " " + oy);
+      path.setAttribute("stroke", "hsl(171 76% 55%)");
+      path.setAttribute("stroke-width", "1.7");
+      path.setAttribute("stroke-dasharray", "5 4");
+      path.setAttribute("vector-effect", "non-scaling-stroke");
+      path.setAttribute("opacity", "0.95");
+      svg.appendChild(path);
+      // recipient marker (the "to" end), to suggest direction for funding
+      const tx = (otherName === e.to) ? ox : cx, ty = (otherName === e.to) ? oy : cy;
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", tx); dot.setAttribute("cy", ty); dot.setAttribute("r", "4");
+      dot.setAttribute("fill", "hsl(171 76% 60%)");
+      svg.appendChild(dot);
+      otherPin.classList.add("rel-on", "rel-connected");
+      drew++;
+    });
+    if (!drew) clearRelations();
+  }
+  function clearRelations() {
+    const svg = document.getElementById("relLayer");
+    if (svg) svg.innerHTML = "";
+    pinLayer.classList.remove("rel-active");
+    pinLayer.querySelectorAll(".pin.rel-on, .pin.rel-source, .pin.rel-connected")
+      .forEach(p => p.classList.remove("rel-on", "rel-source", "rel-connected"));
+  }
+
+  function rerenderAll() { renderPins(); renderDirectory(); applyFilters(); }
   rerenderAll();
+  buildFilters();
+  applyFilters();
 
   // ── Admin panel (?admin=1) ────────────────────────────────────
   const isAdmin = ADMIN;
@@ -1074,11 +1370,12 @@
       form.style.display = "";
       title.textContent = idx == null ? "Add an org" : "Edit org";
       const org = idx == null
-        ? { name: "", short: "", region: "Conceptual Cliffs", url: "", logo: "", bio: "", x: 50, y: 50 }
+        ? { name: "", short: "", region: "Conceptual Cliffs", audience: "both", url: "", logo: "", bio: "", x: 50, y: 50 }
         : ORGS[idx];
       form.elements.name.value = org.name || "";
       form.elements.short.value = org.short || "";
       form.elements.region.value = org.region || "Conceptual Cliffs";
+      form.elements.audience.value = org.audience || "both";
       form.elements.url.value = org.url || "";
       form.elements.logo.value = org.logo || "";
       form.elements.bio.value = org.bio || "";
@@ -1157,6 +1454,7 @@
         name: form.elements.name.value.trim(),
         short: form.elements.short.value.trim(),
         region: form.elements.region.value,
+        audience: form.elements.audience.value,
         url: form.elements.url.value.trim(),
         logo: form.elements.logo.value.trim() || null,
         bio: form.elements.bio.value.trim(),
