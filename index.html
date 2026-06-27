@@ -679,19 +679,7 @@
   .dot-animals { background: hsl(28 62% 44%); }
   .dot-digital-minds { background: hsl(171 70% 42%); }
   .dot-both { background: linear-gradient(90deg, hsl(28 62% 44%) 0 50%, hsl(171 70% 42%) 50% 100%); }
-  .filter-search {
-    flex: 1;
-    min-width: 160px;
-    background: hsl(30 10% 12%);
-    border: 1px solid hsl(30 15% 24%);
-    color: hsl(32 45% 91%);
-    padding: 7px 12px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 13px;
-  }
-  .filter-search:focus { outline: none; border-color: hsl(var(--accent)); }
-  .filter-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: hsl(32 25% 60%); font-family: 'JetBrains Mono', monospace; }
+  .filter-meta { display: flex; align-items: center; gap: 12px; margin-left: auto; font-size: 12px; color: hsl(32 25% 60%); font-family: 'JetBrains Mono', monospace; }
   .filter-clear { background: none; border: none; color: hsl(var(--accent)); cursor: pointer; font-family: inherit; font-size: 12px; padding: 0; }
   .filter-clear:hover { text-decoration: underline; }
 
@@ -779,7 +767,6 @@
 <section class="filter-bar" id="filterBar">
   <div class="filter-group" id="regionFilters"><span class="fg-label">Region</span></div>
   <div class="filter-group" id="audienceFilters"><span class="fg-label">Helps</span></div>
-  <input class="filter-search" id="filterSearch" type="search" placeholder="Search organisations…" aria-label="Search organisations" />
   <div class="filter-meta"><span id="filterCount"></span><button class="filter-clear" id="filterClear" hidden>Clear</button></div>
 </section>
 
@@ -1260,12 +1247,9 @@
       chip.onclick = () => { toggleSet(filterState.audiences, key); chip.classList.toggle("on"); applyFilters(); };
       audWrap.appendChild(chip);
     });
-    const search = document.getElementById("filterSearch");
-    if (search) search.addEventListener("input", () => { filterState.text = search.value; applyFilters(); });
     const clearBtn = document.getElementById("filterClear");
     if (clearBtn) clearBtn.addEventListener("click", () => {
-      filterState.regions.clear(); filterState.audiences.clear(); filterState.text = "";
-      if (search) search.value = "";
+      filterState.regions.clear(); filterState.audiences.clear();
       document.querySelectorAll(".filter-bar .chip.on").forEach(c => c.classList.remove("on"));
       applyFilters();
     });
