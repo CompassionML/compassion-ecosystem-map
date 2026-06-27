@@ -962,6 +962,10 @@
     { from: "Sentient Futures", to: "AI x Animals", type: "program" },         // AI x Animals fund/fellowship run by Sentient Futures
     { from: "Macroscopic Ventures", to: "CMEP", type: "funds" },               // confirmed
     { from: "Macroscopic Ventures", to: "Eleos AI Research", type: "funds" },  // confirmed
+    { from: "Sentient Futures", to: "Eleos AI Research", type: "collaborates" },
+    { from: "Sentient Futures", to: "CMEP", type: "collaborates" },
+    { from: "Sentient Futures", to: "CaML", type: "collaborates" },
+    { from: "Sentient Futures", to: "Reciprocal Research", type: "collaborates" },
   ];
 
   // Second dimension: who each org primarily works to help.
@@ -1287,12 +1291,14 @@
       path.setAttribute("vector-effect", "non-scaling-stroke");
       path.setAttribute("opacity", "0.95");
       svg.appendChild(path);
-      // recipient marker (the "to" end), to suggest direction for funding
-      const tx = (otherName === e.to) ? ox : cx, ty = (otherName === e.to) ? oy : cy;
-      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("cx", tx); dot.setAttribute("cy", ty); dot.setAttribute("r", "4");
-      dot.setAttribute("fill", "hsl(171 76% 60%)");
-      svg.appendChild(dot);
+      // recipient marker (the "to" end) only for directional funding links
+      if (e.type === "funds") {
+        const tx = (otherName === e.to) ? ox : cx, ty = (otherName === e.to) ? oy : cy;
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", tx); dot.setAttribute("cy", ty); dot.setAttribute("r", "4");
+        dot.setAttribute("fill", "hsl(171 76% 60%)");
+        svg.appendChild(dot);
+      }
       otherPin.classList.add("rel-on", "rel-connected");
       drew++;
     });
