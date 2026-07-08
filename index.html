@@ -841,7 +841,7 @@
 <section class="about">
   <h2>About this map</h2>
   <p>Every organisation here works on the risks advanced AI poses to sentient beings, through research, advocacy, tools, funding, or field-building. That means one of two things: reducing the risks transformative AI poses to animals, or safeguarding the moral status and wellbeing of digital minds (the AI systems themselves). "Helps animals" here means work at the AI-and-animals intersection specifically, not animal welfare in general; for a funder, that means backing AI-and-animals work, not animal charities at large. Orgs working on animal welfare unrelated to AI, or AI safety unrelated to sentience, sit just outside the scope. The bar is strict on purpose.</p>
-  <p>Curated by <a href="https://sentientfutures.ai" target="_blank" rel="noopener">Sentient Futures</a> and <a href="https://compassionml.com" target="_blank" rel="noopener">CaML</a>. The list is a snapshot. Emerging orgs are added as they meet the bar.</p>
+  <p>Curated by <a href="https://compassionml.com" target="_blank" rel="noopener">CaML</a>. The list is a snapshot. Emerging orgs are added as they meet the bar.</p>
 </section>
 
 <section class="directory">
@@ -852,7 +852,7 @@
 <section class="submit">
   <h2>Submit an organisation</h2>
   <p>Know an org that should be here? Send us a note with the name, website, and a sentence on what they do.</p>
-  <a class="submit-cta" href="mailto:collaborations@sentientfutures.ai?subject=Compassion%20AI%20Ecosystem%20%E2%80%94%20submission&body=Org%20name%3A%20%0AWebsite%3A%20%0AWhat%20they%20do%20(1-2%20sentences)%3A%20%0AWhich%20region%20fits%20best%20(Conceptual%20Cliffs%2C%20Empirical%20Estuary%2C%20Funding%20Forest%2C%20Field-building%20Fjords%2C%20Training%20Tidelands)%3A%20%0AWhy%20it%20belongs%20on%20the%20map%3A%20">
+  <a class="submit-cta" href="mailto:compassioninmachinelearning@gmail.com?subject=Compassion%20AI%20Ecosystem%20%E2%80%94%20submission&body=Org%20name%3A%20%0AWebsite%3A%20%0AWhat%20they%20do%20(1-2%20sentences)%3A%20%0AWhich%20region%20fits%20best%20(Conceptual%20Cliffs%2C%20Empirical%20Estuary%2C%20Funding%20Forest%2C%20Field-building%20Fjords%2C%20Training%20Tidelands)%3A%20%0AWhy%20it%20belongs%20on%20the%20map%3A%20">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     Email a submission
   </a>
@@ -922,11 +922,9 @@
 
 <footer class="page">
   <div class="links">
-    <a href="https://sentientfutures.ai" target="_blank" rel="noopener">Sentient Futures</a>
-    <span style="color: hsl(30 15% 30%)">·</span>
     <a href="https://compassionml.com" target="_blank" rel="noopener">CaML</a>
   </div>
-  <div class="credit">© 2026 · Curated jointly by Sentient Futures and CaML</div>
+  <div class="credit">© 2026 · Curated by CaML</div>
 </footer>
 
 <script>
@@ -951,8 +949,7 @@
     { name: "Survival and Flourishing Fund", short: "Sf", logo: "logos/sff.png", x: 83.42, y: 28.64, region: "Funding Forest", audience: "both", url: "https://survivalandflourishing.fund/", bio: "A grantmaking platform funded primarily by Jaan Tallinn. The 2026 round includes a dedicated Animal Welfare track." },
     { name: "Macroscopic Ventures", short: "Mv", logo: "logos/macroscopic.svg", x: 75.62, y: 23.58, region: "Funding Forest", audience: "both", url: "https://macroscopic.org/", bio: "A Swiss nonprofit deploying up to $100M a year in grants and investments across AI welfare, cooperative AI, s-risks, and animal welfare. A core funder of digital-minds and animal-welfare work." },
 
-    // Field-building Fjords ⇄ Training Tidelands (Sentient Futures straddles)
-    { name: "Sentient Futures", short: "Sn", logo: "logos/sentient-futures.webp", x: 74.95, y: 59.25, region: "Field-building Fjords & Training Tidelands", audience: "both", url: "https://www.sentientfutures.ai/", bio: "An international field-building organisation creating a thriving ecosystem where researchers, advocates, and industry professionals can collaborate to reduce suffering for all sentient beings. Runs summits, fellowships, and a Slack community at the AI × animals / digital minds intersection." },
+    // Field-building Fjords ⇄ Training Tidelands
     { name: "PRISM", short: "P", logo: "logos/prism.webp", x: 82, y: 42, region: "Field-building Fjords & Training Tidelands", audience: "digital-minds", url: "https://www.prism-global.com/", bio: "The Partnership for Research Into Sentient Machines, a nonprofit coalition building the field around AI sentience through research coordination, convening, and public engagement." },
   ];
 
@@ -960,14 +957,8 @@
   // DRAFT — verify before deploy. type: "funds" | "program" | "collaborates".
   const RELATIONSHIPS = [
     { from: "Survival and Flourishing Fund", to: "CaML", type: "funds" },      // confirmed
-    { from: "Sentient Futures", to: "AI x Animals", type: "program" },         // AI x Animals fund/fellowship run by Sentient Futures
     { from: "Macroscopic Ventures", to: "CMEP", type: "funds" },               // confirmed
     { from: "Macroscopic Ventures", to: "Eleos AI Research", type: "funds" },  // confirmed
-    { from: "Sentient Futures", to: "Eleos AI Research", type: "collaborates" },
-    { from: "Sentient Futures", to: "CMEP", type: "collaborates" },
-    { from: "Sentient Futures", to: "CaML", type: "collaborates" },
-    { from: "Sentient Futures", to: "Reciprocal Research", type: "collaborates" },
-    { from: "Sentient Futures", to: "Mycelium", type: "collaborates" },       // partner listed on projectmycelium.ai
     { from: "Macroscopic Ventures", to: "Center on Long-Term Risk", type: "funds" },           // confirmed
     { from: "Survival and Flourishing Fund", to: "Center on Long-Term Risk", type: "funds" },   // confirmed
   ];
@@ -982,7 +973,7 @@
   // Load any admin edits from localStorage (so the user's last edits persist
   // across reloads in their browser). To bake edits into the source for
   // everyone, export the JSON and paste it into DEFAULT_ORGS.
-  const STORAGE_KEY = "compassion-ecosystem.orgs.v4";
+  const STORAGE_KEY = "compassion-ecosystem.orgs.v5";
   let ORGS = (() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
