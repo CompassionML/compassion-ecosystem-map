@@ -942,7 +942,6 @@
     // Empirical Estuary
     { name: "CaML",                short: "Ca", logo: "logos/caml.png",                x: 29.39, y: 74.69, region: "Empirical Estuary", audience: "both", url: "https://www.compassionml.com/", bio: "Compassion Aligned Machine Learning builds benchmarks (ANIMA, MORU, TAC) and pre-training interventions to ensure AI systems reflect compassion for all sentient beings." },
     { name: "Reciprocal Research", short: "RR", logo: "logos/reciprocal-research.png", x: 25.56, y: 57.22, region: "Empirical Estuary", audience: "digital-minds", url: "https://reciprocalresearch.org/", bio: "Developing the empirical science of AI consciousness: mechanistic interpretability, computational neuroscience, and psychometric methods applied to AI moral status." },
-    { name: "Mycelium", short: "My", logo: null, x: 35.2, y: 64.5, region: "Empirical Estuary", audience: "animals", url: "https://www.projectmycelium.ai/", bio: "Builds the connective infrastructure between AI safety and animal welfare: the benchmarks, evaluations, and tools that push AI systems to consider all sentient beings. A fiscally sponsored project of Anti Entropy." },
 
     // Funding Forest
     { name: "AI x Animals", short: "AA", logo: null,                  x: 55.81, y: 22.03, region: "Funding Forest", audience: "animals", url: "https://sentientfutures.substack.com/p/aixanimals-fellowship-and-funding", bio: "An independent pooled fund (with an 8-week fellowship arm) issuing $10–50k grants for projects at the AI × animal welfare intersection." },
@@ -973,7 +972,7 @@
   // Load any admin edits from localStorage (so the user's last edits persist
   // across reloads in their browser). To bake edits into the source for
   // everyone, export the JSON and paste it into DEFAULT_ORGS.
-  const STORAGE_KEY = "compassion-ecosystem.orgs.v5";
+  const STORAGE_KEY = "compassion-ecosystem.orgs.v6";
   let ORGS = (() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
