@@ -1,9 +1,8 @@
 # The Compassion AI Ecosystem — share-ready page
 
 Standalone, self-contained static site for the Compassion AI Ecosystem map.
-Co-branded as a collaboration between Sentient Futures and CaML. Deploys to
-any static host (Cloudflare Pages, Netlify, GitHub Pages, etc.) without a
-backend.
+Deploys to any static host (Cloudflare Pages, Netlify, GitHub Pages, etc.)
+without a backend.
 
 ## What's in here
 
