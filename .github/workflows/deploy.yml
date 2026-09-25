@@ -1,0 +1,32 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      # Upload only the site files (not README, .github, .wrangler).
+      - name: Stage site
+        run: |
+          mkdir _site
+          cp index.html *.png _site/
+          cp -r logos _site/
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: d59bd199eab7d604e7878abf44485403
+          command: pages deploy _site --project-name=compassion-ecosystem --branch=main --commit-dirty=true
